@@ -8,1023 +8,401 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+img{display:block;max-width:100%}
+a{text-decoration:none}
+body{background:#F2EEE5;color:#1C1917;font-family:'Jost',sans-serif;font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+:root{
+  --cream:#F2EEE5;--ivory:#E9E6D7;--parch:#DDD6C4;
+  --nude:#B0A498;--feathers:#A29A90;--rose:#9B756E;--blushed:#754F4D;
+  --burg:#422020;--gold:#947850;--glt:#B09A6A;
+  --dark:#0E0E0F;--ink:#433F2A;--mid:#5C4E42;--muted:#8A7F79;--sage:#7B7458;
+  --nh:64px;
+}
+.lbl{font-family:'Jost',sans-serif;font-size:.58rem;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:1rem}
+.dsp{font-family:'Cormorant',serif;font-weight:400;line-height:1.1;color:var(--dark)}
+.dsp em{font-style:italic;color:var(--blushed)}
+.bdy{font-size:.95rem;color:var(--mid);line-height:1.9}
+.bdy p+p{margin-top:1rem}
+.bdy strong{color:var(--ink);font-weight:400}
+.rule{width:2rem;height:1px;background:var(--gold);margin:1.4rem 0 2rem}
+.btn{display:inline-block;font-family:'Jost',sans-serif;font-size:.62rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:.85rem 2rem;transition:all .25s;cursor:pointer;border:none;line-height:1}
+.btn-dk{background:var(--dark);color:var(--cream)}.btn-dk:hover{background:var(--burg)}
+.btn-bg{background:var(--burg);color:var(--cream)}.btn-bg:hover{background:var(--blushed)}
+.btn-ol{border:1px solid rgba(92,81,76,.4);color:var(--mid);background:transparent}.btn-ol:hover{border-color:var(--dark);color:var(--dark)}
+.btn-wh{border:1px solid rgba(233,230,215,.45);color:var(--ivory);background:transparent}.btn-wh:hover{background:var(--ivory);color:var(--dark)}
+.btn-cr{background:var(--cream);color:var(--dark)}.btn-cr:hover{background:var(--ivory)}
+.sec{padding:clamp(4rem,8vw,7rem) clamp(1.5rem,5vw,4rem)}
 
-/* ── RESET ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-img { display: block; max-width: 100%; }
-a { text-decoration: none; }
-body {
-  background: #F2EEE5;
-  color: #1C1917;
-  font-family: 'Jost', sans-serif;
-  font-weight: 300;
-  line-height: 1.7;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  overflow-x: hidden;
-}
+/* GATE */
+#gate{position:fixed;inset:0;z-index:9999;background:var(--dark);display:flex;align-items:center;justify-content:center;transition:opacity .6s}
+#gate.hide{opacity:0;pointer-events:none}
+.gate-bg{position:absolute;inset:0}
+.gate-bg img{width:100%;height:100%;object-fit:cover;object-position:center 20%;opacity:.15;filter:saturate(.4)}
+.gate-box{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:2.5rem 2rem;width:100%;max-width:360px}
+.gate-logo{font-family:'Cormorant',serif;font-weight:300;font-size:1.9rem;color:var(--ivory);letter-spacing:.04em;margin-bottom:.3rem}
+.gate-sub{font-size:.5rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(176,164,152,.45);margin-bottom:2rem}
+.gate-div{width:1.5rem;height:1px;background:var(--gold);opacity:.45;margin-bottom:2rem}
+.gate-hint{font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem}
+#gi{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--ivory);font-family:'Jost',sans-serif;font-size:1rem;letter-spacing:.18em;text-align:center;padding:.85rem 1rem;outline:none;margin-bottom:.5rem;transition:border-color .25s}
+#gi:focus{border-color:rgba(148,120,80,.7)}
+#gi.err{border-color:rgba(117,79,77,.9);animation:shake .35s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+#gm{font-size:.58rem;color:var(--blushed);letter-spacing:.1em;min-height:1rem;margin-bottom:.8rem;opacity:0;transition:opacity .2s}
+#gm.show{opacity:1}
+#gb{width:100%;background:var(--burg);color:var(--cream);font-family:'Jost',sans-serif;font-size:.62rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:1rem;border:none;cursor:pointer;transition:background .25s}
+#gb:hover{background:var(--blushed)}
+.gate-note{margin-top:2rem;font-size:.5rem;letter-spacing:.14em;color:rgba(138,127,121,.25)}
 
-/* ── PALETTE ── */
-:root {
-  --cream:     #F2EEE5;
-  --ivory:     #E9E6D7;
-  --parchment: #DDD6C4;
-  --nude:      #B0A498;
-  --feathers:  #A29A90;
-  --rose:      #9B756E;
-  --blushed:   #754F4D;
-  --burgundy:  #422020;
-  --gold:      #947850;
-  --gold-lt:   #B09A6A;
-  --charcoal:  #0E0E0F;
-  --ink:       #433F2A;
-  --mid:       #5C4E42;
-  --muted:     #8A7F79;
-  --sagebound: #7B7458;
-  --deep-olive:#433F2A;
-  --nav-h:     64px;
-}
+/* NAV */
+nav{position:fixed;inset:0 0 auto 0;z-index:500;height:var(--nh);background:transparent;border-bottom:1px solid transparent;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.5rem,5vw,4rem);transition:background .4s,border-color .3s,box-shadow .3s}
+nav.sc{background:var(--cream);border-bottom-color:var(--parch);box-shadow:0 1px 20px rgba(28,25,23,.08)}
+.nbrand{display:flex;flex-direction:column;gap:.1rem}
+.nbn{font-family:'Cormorant',serif;font-size:1.1rem;font-weight:500;color:var(--ivory);letter-spacing:.02em;line-height:1;transition:color .4s}
+nav.sc .nbn{color:var(--dark)}
+.nbs{font-size:.5rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(233,230,215,.55);transition:color .4s}
+nav.sc .nbs{color:var(--muted)}
+.nlinks{list-style:none;display:flex;gap:2.5rem}
+.nlinks a{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(233,230,215,.75);transition:color .2s}
+nav.sc .nlinks a{color:var(--mid)}
+.nlinks a:hover{color:var(--ivory)}
+nav.sc .nlinks a:hover{color:var(--dark)}
+.ncta{font-size:.6rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--ivory);border:1px solid rgba(233,230,215,.4);padding:.6rem 1.4rem;transition:all .25s;background:transparent}
+nav.sc .ncta{color:var(--cream);background:var(--burg);border-color:transparent}
+.ncta:hover{background:rgba(233,230,215,.12)}
+nav.sc .ncta:hover{background:var(--blushed)}
+#hbg{display:none;flex-direction:column;gap:5px;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;width:40px;height:40px;padding:8px}
+#hbg span{display:block;width:22px;height:2px;background:var(--ivory);border-radius:1px;transition:background .3s}
+nav.sc #hbg span{background:var(--dark)}
 
-/* ── TYPE HELPERS ── */
-.t-label {
-  font-family: 'Jost', sans-serif;
-  font-size: 0.58rem;
-  font-weight: 500;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: #947850;
-  display: block;
-  margin-bottom: 1rem;
-}
-.t-display {
-  font-family: 'Cormorant', serif;
-  font-weight: 400;
-  line-height: 1.1;
-  color: var(--charcoal);
-}
-.t-display em { font-style: italic; color: var(--blushed); }
-.t-body {
-  font-size: 0.95rem;
-  color: var(--mid);
-  line-height: 1.9;
-}
-.t-body p + p { margin-top: 1rem; }
-.t-body strong { color: var(--ink); font-weight: 400; }
-.rule {
-  width: 2rem; height: 1px;
-  background: var(--gold);
-  margin: 1.4rem 0 2rem;
-}
+/* MOBILE MENU */
+#mm{display:none;position:fixed;inset:0;z-index:600;flex-direction:row}
+#mm.open{display:flex}
+#mmb{flex:1;background:rgba(0,0,0,.5);cursor:pointer}
+#mmp{width:300px;max-width:85vw;background:var(--dark);display:flex;flex-direction:column;flex-shrink:0}
+#mmh{height:var(--nh);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;border-bottom:1px solid rgba(255,255,255,.07)}
+#mmhb{font-family:'Cormorant',serif;font-size:.9rem;color:rgba(233,230,215,.45);letter-spacing:.04em}
+#mmc{background:none;border:none;cursor:pointer;color:rgba(233,230,215,.45);font-size:1.8rem;line-height:1;width:36px;height:36px;display:flex;align-items:center;justify-content:center;transition:color .2s}
+#mmc:hover{color:var(--ivory)}
+#mml{flex:1;display:flex;flex-direction:column;justify-content:center;padding:1.5rem 2rem}
+#mml a{font-family:'Cormorant',serif;font-size:2rem;font-weight:300;color:rgba(233,230,215,.6);display:block;padding:.8rem 0;border-bottom:1px solid rgba(255,255,255,.06);transition:color .2s,padding-left .2s}
+#mml a:first-child{border-top:1px solid rgba(255,255,255,.06)}
+#mml a:hover{color:var(--ivory);padding-left:.5rem}
+#mmf{padding:1.5rem 2rem 2.5rem;border-top:1px solid rgba(255,255,255,.06)}
+#mmct{display:block;font-family:'Jost',sans-serif;font-size:.6rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;text-align:center;color:var(--cream);background:var(--burg);padding:.9rem;margin-bottom:1.1rem;transition:background .2s}
+#mmct:hover{background:var(--blushed)}
+.mmcs{display:flex;flex-direction:column;gap:.4rem;text-align:center}
+.mmcs a{font-size:.62rem;letter-spacing:.06em;color:rgba(138,127,121,.5);transition:color .2s}
+.mmcs a:hover{color:var(--nude)}
 
-/* ── BUTTONS ── */
-.btn {
-  display: inline-block;
-  font-family: 'Jost', sans-serif;
-  font-size: 0.62rem;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  padding: 0.85rem 2rem;
-  transition: all 0.25s ease;
-  cursor: pointer;
-  border: none;
-  line-height: 1;
-}
-.btn-solid   { background: var(--charcoal); color: var(--cream); }
-.btn-solid:hover { background: var(--burgundy); }
-.btn-border  { border: 1px solid rgba(92,81,76,0.35); color: var(--mid); background: transparent; }
-.btn-border:hover { border-color: var(--charcoal); color: var(--charcoal); }
-.btn-burg    { background: var(--burgundy); color: var(--cream); }
-.btn-burg:hover { background: var(--blushed); }
-.btn-ivory-outline { border: 1px solid rgba(234,231,224,0.4); color: var(--ivory); background: transparent; }
-.btn-ivory-outline:hover { background: var(--ivory); color: var(--charcoal); border-color: var(--ivory); }
-.btn-gold-fill { background: var(--cream); color: var(--charcoal); }
-.btn-gold-fill:hover { background: var(--ivory); }
+/* HERO */
+#hero{position:relative;min-height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+.hbg{position:absolute;inset:0;z-index:0}
+.hbg img{width:100%;height:100%;object-fit:cover;object-position:center 22%;transform:scale(1.04);transition:transform 9s}
+#hero.ld .hbg img{transform:scale(1)}
+.hbg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(14,14,15,.55) 0%,rgba(14,14,15,.32) 20%,rgba(14,14,15,.48) 50%,rgba(14,14,15,.78) 78%,rgba(14,14,15,.92) 100%)}
+.hcon{position:relative;z-index:2;padding:0 clamp(1.5rem,5vw,5rem) clamp(3rem,6vh,5rem);display:grid;grid-template-columns:1fr auto;align-items:flex-end;gap:2rem}
+.hh1{font-family:'Cormorant',serif;font-weight:300;font-size:clamp(3.8rem,8.5vw,9rem);line-height:.92;color:var(--ivory);letter-spacing:-.01em;margin-bottom:2rem;text-shadow:0 2px 40px rgba(14,14,15,.65)}
+.hh1 em{font-style:italic;color:var(--nude)}
+.hl2{padding-left:clamp(2rem,6vw,6rem);display:block}
+.hl3{padding-left:clamp(4rem,10vw,10rem);display:block}
+.hsub{display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+.hstrap{font-family:'Cormorant',serif;font-style:italic;font-size:clamp(.95rem,1.4vw,1.15rem);color:rgba(233,228,218,.9);font-weight:300;line-height:1.5;max-width:340px;text-shadow:0 1px 16px rgba(14,14,15,.5)}
+.hbtns{display:flex;gap:.7rem;flex-wrap:wrap}
+.hmeta{display:flex;flex-direction:column;align-items:flex-end;gap:1.8rem}
+.hscr{display:flex;flex-direction:column;align-items:center;gap:.6rem;cursor:pointer}
+.hscrl{font-size:.52rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(233,230,215,.4);writing-mode:vertical-rl}
+.hscrd{width:1px;height:3rem;background:linear-gradient(to bottom,transparent,rgba(233,230,215,.35));animation:pu 2.2s ease-in-out infinite}
+@keyframes pu{0%,100%{opacity:.4;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.15)}}
+.hwm{position:absolute;bottom:0;left:0;right:0;z-index:3;border-top:1px solid rgba(233,230,215,.1);display:flex;justify-content:space-between;align-items:center;padding:.9rem clamp(1.5rem,5vw,5rem);pointer-events:none}
+.hwmn{font-family:'Cormorant',serif;font-size:clamp(.65rem,1vw,.8rem);font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:rgba(233,230,215,.28)}
+.hwml{font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(233,230,215,.18)}
 
-/* ── NAV ── */
-nav {
-  position: fixed;
-  inset: 0 0 auto 0;
-  z-index: 999;
-  height: var(--nav-h);
-  background: transparent;
-  border-bottom: 1px solid transparent;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 clamp(1.5rem, 5vw, 4rem);
-  transition: background 0.4s ease, border-color 0.3s, box-shadow 0.3s;
-}
-nav.scrolled {
-  background: var(--cream);
-  border-bottom-color: var(--parchment);
-  box-shadow: 0 1px 20px rgba(28,25,23,0.08);
-}
-.nav-brand { display: flex; flex-direction: column; gap: 0.1rem; }
-.nav-brand-name {
-  font-family: 'Cormorant', serif;
-  font-size: 1.1rem; font-weight: 500;
-  color: var(--ivory); letter-spacing: 0.02em; line-height: 1;
-  transition: color 0.4s;
-}
-nav.scrolled .nav-brand-name { color: var(--charcoal); }
-.nav-brand-sub {
-  font-size: 0.5rem; font-weight: 400;
-  letter-spacing: 0.26em; text-transform: uppercase;
-  color: rgba(234,231,224,0.6); line-height: 1;
-  transition: color 0.4s;
-}
-nav.scrolled .nav-brand-sub { color: var(--muted); }
-.nav-links { list-style: none; display: flex; gap: 2.5rem; }
-.nav-links a {
-  font-size: 0.62rem; font-weight: 400;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: rgba(234,231,224,0.75); transition: color 0.2s;
-}
-nav.scrolled .nav-links a { color: var(--mid); }
-.nav-links a:hover { color: var(--ivory); }
-nav.scrolled .nav-links a:hover { color: var(--charcoal); }
-.nav-cta {
-  font-size: 0.6rem; font-weight: 500;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--ivory); background: transparent;
-  border: 1px solid rgba(234,231,224,0.4);
-  padding: 0.6rem 1.4rem; transition: all 0.25s;
-}
-nav.scrolled .nav-cta {
-  color: var(--cream); background: var(--burgundy); border-color: transparent;
-}
-.nav-cta:hover { background: rgba(234,231,224,0.15); border-color: rgba(234,231,224,0.7); }
-nav.scrolled .nav-cta:hover { background: var(--blushed); }
-.nav-hamburger {
-  display: none; flex-direction: column; gap: 5px;
-  cursor: pointer; padding: 4px; background: none; border: none;
-}
-.nav-hamburger span { display: block; width: 22px; height: 1.5px; background: var(--ivory); transition: all 0.3s; }
-nav.scrolled .nav-hamburger span { background: var(--charcoal); }
-.mobile-menu {
-  display: none; position: fixed;
-  inset: var(--nav-h) 0 0 0;
-  background: var(--cream); z-index: 998;
-  flex-direction: column; align-items: center; justify-content: center; gap: 2.2rem;
-  border-top: 1px solid var(--parchment);
-}
-.mobile-menu.open { display: flex; }
-.mobile-menu a {
-  font-family: 'Cormorant', serif; font-size: 2.2rem; font-weight: 400;
-  color: var(--charcoal); letter-spacing: 0.04em; transition: color 0.2s;
-}
-.mobile-menu a:hover { color: var(--blushed); }
-.mob-cta {
-  font-family: 'Jost', sans-serif !important;
-  font-size: 0.62rem !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.2em !important;
-  text-transform: uppercase !important;
-  color: var(--cream) !important;
-  background: var(--burgundy) !important;
-  padding: 0.85rem 2.2rem !important;
-}
+/* TICKER */
+.tkr{background:var(--burg);height:40px;overflow:hidden;display:flex;align-items:center}
+.tkrt{display:flex;white-space:nowrap;animation:tk 40s linear infinite}
+.tkrt span{font-size:.56rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(242,238,229,.5);padding:0 1.8rem}
+.tkrt .sep{color:var(--nude);padding:0 .2rem;letter-spacing:0}
+@keyframes tk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* ── HERO ── */
-#hero {
-  position: relative;
-  min-height: 100svh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
+/* MANIFESTO */
+#manifesto{background:#E4DFD0}
+.mgrid{display:grid;grid-template-columns:5fr 6fr;gap:clamp(3rem,7vw,7rem);align-items:center}
+.mimg{position:relative}
+.mimg img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 15%}
+.mbadge{position:absolute;bottom:-1.2rem;right:-1.2rem;background:var(--burg);padding:1.2rem 1.5rem;max-width:200px;box-shadow:0 4px 20px rgba(66,32,32,.25)}
+.mbadge p{font-family:'Cormorant',serif;font-style:italic;font-size:1rem;color:var(--nude);line-height:1.45}
+.mtxt h2{font-size:clamp(2rem,3.5vw,3.2rem)}
+.pq{font-family:'Cormorant',serif;font-style:italic;font-size:clamp(1.1rem,1.8vw,1.35rem);color:var(--blushed);line-height:1.5;padding-left:1.2rem;border-left:2px solid var(--nude);margin:1.8rem 0}
 
-/* Full-bleed background image */
-.hero-bg {
-  position: absolute; inset: 0;
-  z-index: 0;
-}
-.hero-bg img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: center 22%;
-  display: block;
-  transform: scale(1.04);
-  transition: transform 9s ease;
-}
-#hero.loaded .hero-bg img { transform: scale(1); }
+/* ABOUT */
+#about{background:#EAE5D5}
+.agrid{display:grid;grid-template-columns:6fr 5fr;gap:clamp(3rem,7vw,7rem);align-items:start}
+.atxt h2{font-size:clamp(2rem,3.5vw,3.2rem)}
+.tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:2rem}
+.tag{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);border:1px solid rgba(123,116,88,.3);padding:.3rem .8rem}
+.aphotos{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.aphotos img:first-child{grid-column:1/-1;height:clamp(200px,28vw,320px);width:100%;object-fit:cover;object-position:center 30%}
+.aphotos img:not(:first-child){height:clamp(130px,18vw,210px);width:100%;object-fit:cover;object-position:center 25%}
 
-/* Layered gradient — covers whole hero so all text reads cleanly */
-.hero-bg::after {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(to bottom,
-      rgba(14,14,15,0.55) 0%,
-      rgba(14,14,15,0.32) 20%,
-      rgba(14,14,15,0.48) 50%,
-      rgba(14,14,15,0.78) 78%,
-      rgba(14,14,15,0.92) 100%
-    );
-}
+/* SERVICES */
+#services{background:var(--dark);overflow:hidden}
+.sh{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,6rem);align-items:end;padding:clamp(4rem,8vw,7rem) clamp(1.5rem,5vw,4rem) clamp(3rem,5vw,4.5rem);border-bottom:1px solid rgba(255,255,255,.06)}
+#services .lbl{color:var(--glt)}
+#services .dsp{color:var(--ivory)}
+#services .dsp em{color:var(--nude)}
+#services .rule{background:var(--gold);opacity:.5}
+.sh h2{font-size:clamp(2.2rem,3.8vw,3.6rem)}
+.shr{display:flex;flex-direction:column;justify-content:flex-end;gap:1.5rem}
+.shr .bdy{color:var(--feathers);max-width:420px}
+.snote{font-size:.72rem;color:var(--muted);font-family:'Cormorant',serif;font-style:italic;border-left:2px solid rgba(140,114,72,.4);padding-left:1rem;line-height:1.6}
+.sstrip{display:grid;grid-template-columns:1fr 1fr 1fr;height:clamp(180px,22vw,300px);border-bottom:1px solid rgba(255,255,255,.06)}
+.sph{overflow:hidden;position:relative}
+.sph img{width:100%;height:100%;object-fit:cover;object-position:center 20%;filter:brightness(.55) saturate(.7);transition:filter .5s,transform .6s}
+.sph:nth-child(1) img{object-position:center 15%}
+.sph:nth-child(2) img{object-position:center 30%}
+.sph:nth-child(3) img{object-position:center 25%}
+.sph:hover img{filter:brightness(.75) saturate(.85);transform:scale(1.04)}
+.sph::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(14,14,15,.5) 0%,transparent 60%);pointer-events:none}
+.scards{display:grid;grid-template-columns:repeat(3,1fr)}
+.scard{padding:2.4rem clamp(1.5rem,3vw,2.8rem);border-right:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;gap:1rem;position:relative;transition:background .3s;cursor:default}
+.scard:nth-child(3n){border-right:none}
+.scard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--burg),var(--gold));opacity:0;transition:opacity .3s}
+.scard:hover{background:rgba(66,32,32,.18)}
+.scard:hover::before{opacity:1}
+.sct{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.snum{font-family:'Cormorant',serif;font-size:.78rem;font-weight:300;color:rgba(140,114,72,.55);letter-spacing:.1em;padding-top:.15rem;flex-shrink:0}
+.sico{width:32px;height:32px;opacity:.35;flex-shrink:0}
+.sname{font-family:'Cormorant',serif;font-size:clamp(1.15rem,1.6vw,1.4rem);font-weight:400;color:var(--ivory);line-height:1.2;flex:1}
+.sdesc{font-size:.84rem;color:var(--feathers);line-height:1.8;flex:1}
+.stag{font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);opacity:.7;font-weight:500;margin-top:auto;padding-top:.8rem;border-top:1px solid rgba(255,255,255,.05)}
+.sband{background:var(--burg);padding:2.8rem clamp(1.5rem,5vw,4rem);display:grid;grid-template-columns:1fr auto;align-items:center;gap:3rem}
+.sband p{font-family:'Cormorant',serif;font-style:italic;font-size:clamp(1rem,1.6vw,1.25rem);color:var(--nude);line-height:1.65;max-width:560px}
+.sband small{display:block;margin-top:.6rem;font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(176,164,152,.45);font-style:normal}
 
-/* Content layer */
-.hero-content {
-  position: relative; z-index: 2;
-  padding: 0 clamp(1.5rem, 5vw, 5rem) clamp(3rem, 6vh, 5rem);
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: flex-end;
-  gap: 2rem;
-}
+/* HOW */
+#how{background:#E9E6D7}
+.hgrid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(3rem,7vw,7rem);align-items:start}
+.htxt h2{font-size:clamp(2rem,3.5vw,3.2rem)}
+.steps{margin-top:2.5rem;display:flex;flex-direction:column}
+.step{display:grid;grid-template-columns:2.8rem 1fr;gap:1.2rem;padding:1.8rem 0;border-bottom:1px solid rgba(90,79,74,.15);align-items:start}
+.step:first-child{padding-top:0}
+.stepn{font-family:'Cormorant',serif;font-size:2rem;font-weight:300;color:var(--nude);line-height:1}
+.stepb h3{font-size:.66rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--dark);margin-bottom:.5rem}
+.stepb p{font-size:.9rem;color:var(--mid);line-height:1.8}
+.himg img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center 20%;position:sticky;top:calc(var(--nh) + 2rem)}
 
-/* Left: headline block */
-.hero-copy {}
+/* QUOTE */
+#quote{position:relative;min-height:62vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.qbg{position:absolute;inset:0;background-size:cover;background-position:center 20%;filter:brightness(.22) saturate(.5)}
+.qcon{position:relative;z-index:1;text-align:center;padding:clamp(3rem,8vw,6rem) clamp(1.5rem,10vw,10rem);max-width:900px}
+.qcon blockquote{font-family:'Cormorant',serif;font-style:italic;font-weight:300;font-size:clamp(1.8rem,4vw,3.4rem);color:var(--ivory);line-height:1.3;margin-bottom:2.5rem}
+.qcon blockquote em{color:var(--nude)}
 
-.hero-h1 {
-  font-family: 'Cormorant', serif;
-  font-weight: 300;
-  font-size: clamp(3.8rem, 8.5vw, 9rem);
-  line-height: 0.92;
-  color: var(--ivory);
-  letter-spacing: -0.01em;
-  margin-bottom: 2rem;
-  text-shadow: 0 2px 48px rgba(14,14,15,0.7), 0 1px 12px rgba(14,14,15,0.5);
-}
-.hero-h1 em {
-  font-style: italic;
-  color: var(--nude);
-}
-.hero-h1 .hero-h1-line2 {
-  padding-left: clamp(2rem, 6vw, 6rem);
-  display: block;
-}
-.hero-h1 .hero-h1-line3 {
-  padding-left: clamp(4rem, 10vw, 10rem);
-  display: block;
-}
-.hero-sub {
-  display: flex; align-items: center; gap: 2rem;
-  flex-wrap: wrap;
-}
-.hero-strapline {
-  font-family: 'Cormorant', serif; font-style: italic;
-  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
-  color: rgba(234,228,218,0.9);
-  font-weight: 300; line-height: 1.5;
-  max-width: 340px;
-  text-shadow: 0 1px 16px rgba(14,14,15,0.55);
-}
-.hero-buttons { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+/* CONSULT */
+#consult{background:var(--cream);text-align:center}
+#consult h2{font-size:clamp(2rem,4vw,3.4rem);max-width:520px;margin:.4rem auto 0}
+#consult .rule{margin:1.4rem auto 2rem}
+#consult .bdy{max-width:480px;margin:0 auto 2.5rem;text-align:left}
+.crow{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem}
+.bwa{display:inline-flex;align-items:center;gap:.5rem}
+.cnote{font-size:.82rem;color:var(--muted)}
+.cnote a{color:var(--mid);border-bottom:1px solid rgba(92,81,76,.25);transition:all .2s}
+.cnote a:hover{color:var(--dark);border-color:var(--dark)}
 
-/* Right: vertical meta column */
-.hero-meta {
-  display: flex; flex-direction: column;
-  align-items: flex-end; gap: 1.8rem;
-  padding-bottom: 0.2rem;
-}
-.hero-scroll {
-  display: flex; flex-direction: column;
-  align-items: center; gap: 0.6rem;
-  cursor: pointer;
-}
-.hero-scroll-label {
-  font-size: 0.52rem; letter-spacing: 0.24em;
-  text-transform: uppercase; color: rgba(234,231,224,0.4);
-  writing-mode: vertical-rl;
-}
-.hero-scroll-line {
-  width: 1px; height: 3rem;
-  background: linear-gradient(to bottom, transparent, rgba(234,231,224,0.35));
-  animation: scrollPulse 2.2s ease-in-out infinite;
-}
-@keyframes scrollPulse {
-  0%, 100% { opacity: 0.4; transform: scaleY(1); }
-  50% { opacity: 1; transform: scaleY(1.15); }
-}
-.hero-social {
-  display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end;
-}
-.hero-social a {
-  font-size: 0.52rem; letter-spacing: 0.2em;
-  text-transform: uppercase; color: rgba(234,231,224,0.35);
-  transition: color 0.2s;
-}
-.hero-social a:hover { color: rgba(234,231,224,0.8); }
+/* FOOTER */
+footer{background:var(--dark);padding:clamp(2rem,4vw,3rem) clamp(1.5rem,5vw,4rem)}
+.fi{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:2rem;border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:clamp(1.5rem,3vw,2.5rem);margin-bottom:clamp(1rem,2vw,1.5rem)}
+.fbn{font-family:'Cormorant',serif;font-size:1.1rem;font-weight:400;color:var(--ivory);display:block;margin-bottom:.2rem}
+.fbs{font-size:.52rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.ftag{font-family:'Cormorant',serif;font-style:italic;font-size:.92rem;color:var(--nude);text-align:center}
+.fcon{text-align:right;display:flex;flex-direction:column;gap:.25rem}
+.fcon a{font-size:.7rem;color:var(--muted);letter-spacing:.04em;transition:color .2s}
+.fcon a:hover{color:var(--ivory)}
+.fb{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+.fb span{font-size:.6rem;color:rgba(138,127,121,.4);letter-spacing:.08em}
 
-/* Brand wordmark bar — editorial footer inside hero */
-.hero-wordmark {
-  position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
-  border-top: 1px solid rgba(234,231,224,0.1);
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 0.9rem clamp(1.5rem, 5vw, 5rem);
-  pointer-events: none;
-}
-.hero-wordmark-name {
-  font-family: 'Cormorant', serif;
-  font-size: clamp(0.65rem, 1vw, 0.8rem);
-  font-weight: 400; letter-spacing: 0.28em;
-  text-transform: uppercase; color: rgba(234,231,224,0.3);
-}
-.hero-wordmark-loc {
-  font-size: 0.52rem; letter-spacing: 0.22em;
-  text-transform: uppercase; color: rgba(234,231,224,0.2);
-}
+/* REVEAL */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}
+.rv.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
 
-/* ── TICKER ── */
-.ticker {
-  background: var(--burgundy); height: 40px;
-  overflow: hidden; display: flex; align-items: center;
-}
-.ticker-track {
-  display: flex; white-space: nowrap;
-  animation: tick 40s linear infinite;
-}
-.ticker-track span {
-  font-size: 0.56rem; font-weight: 400;
-  letter-spacing: 0.26em; text-transform: uppercase;
-  color: rgba(242,238,229,0.5); padding: 0 1.8rem;
-}
-.ticker-track .sep { color: var(--nude); letter-spacing: 0; padding: 0 0.2rem; }
-@keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+/* LIGHTBOX */
+#lb{position:fixed;inset:0;z-index:800;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .35s}
+#lb.open{opacity:1;pointer-events:all}
+.lbk{position:absolute;inset:0;background:rgba(28,25,23,.72);backdrop-filter:blur(4px)}
+.lbx{position:relative;z-index:1;background:var(--cream);width:100%;max-width:860px;max-height:92vh;overflow-y:auto;transform:translateY(20px) scale(.98);transition:transform .35s cubic-bezier(.22,1,.36,1)}
+#lb.open .lbx{transform:none}
+.lbcl{position:absolute;top:1.2rem;right:1.2rem;z-index:10;background:var(--parch);border:none;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--mid);transition:background .2s,color .2s}
+.lbcl:hover{background:var(--dark);color:var(--cream)}
+.lbin{display:grid;grid-template-columns:280px 1fr;min-height:520px}
+.lbph{position:relative;overflow:hidden}
+.lbph img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:brightness(.6) saturate(.75)}
+.lbov{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:2rem 1.6rem;background:linear-gradient(to top,rgba(14,14,15,.65) 0%,transparent 55%)}
+.lbq{font-family:'Cormorant',serif;font-style:italic;font-size:1.05rem;color:var(--nude);line-height:1.5;margin-top:.4rem}
+.lbfm{padding:3rem 2.4rem 2.4rem;display:flex;flex-direction:column}
+.lbtit{font-size:clamp(1.5rem,2.5vw,2rem);margin-top:.3rem}
+.lbrow{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.lbf{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+.lbf:last-of-type{margin-bottom:0}
+.lbf label{font-size:.6rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--mid)}
+.lbf input,.lbf select,.lbf textarea{font-family:'Jost',sans-serif;font-size:.88rem;font-weight:300;color:var(--dark);background:var(--ivory);border:1px solid var(--parch);padding:.7rem .9rem;outline:none;width:100%;-webkit-appearance:none;transition:border-color .2s,background .2s}
+.lbf input:focus,.lbf select:focus,.lbf textarea:focus{border-color:var(--gold);background:var(--cream)}
+.lbf input.er,.lbf select.er,.lbf textarea.er{border-color:var(--blushed)}
+.lbf select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A7F79' stroke-width='1.2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.2rem;cursor:pointer}
+.lbf input::placeholder,.lbf textarea::placeholder{color:var(--muted)}
+.lbf textarea{resize:vertical;min-height:100px}
+.lbem{font-size:.58rem;color:var(--blushed);letter-spacing:.08em;display:none}
+.lbem.show{display:block}
+.lbft{display:flex;align-items:center;gap:1.4rem;margin-top:1.6rem;flex-wrap:wrap}
+.lbsb{flex-shrink:0}.lbsb.ld{opacity:.6;pointer-events:none}
+.lbpr{font-size:.72rem;color:var(--muted);font-style:italic;font-family:'Cormorant',serif}
+.lbok{display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3rem 1rem;min-height:300px}
+.lbtk{width:60px;height:60px;border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem}
 
-/* ── SECTION BASE ── */
-.section { padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem); }
-
-/* ── MANIFESTO ── */
-#manifesto { background: #E4DFD0; }
-
-
-
-
-
-
-.manifesto-grid {
-  display: grid; grid-template-columns: 5fr 6fr;
-  gap: clamp(3rem, 7vw, 7rem); align-items: center;
+/* RESPONSIVE */
+@media(max-width:900px){
+  .nlinks,.ncta{display:none}
+  #hbg{display:flex}
+  .hh1{font-size:clamp(2.8rem,10vw,5.5rem)}
+  .hl2{padding-left:clamp(.8rem,3vw,2.5rem)}
+  .hl3{padding-left:clamp(1.6rem,6vw,4rem)}
+  .hcon{grid-template-columns:1fr;gap:1.5rem;padding-bottom:clamp(2.5rem,5vh,4rem)}
+  .hmeta{flex-direction:row;align-items:center;justify-content:flex-start}
+  .hscr{flex-direction:row}
+  .hscrl{writing-mode:horizontal-tb}
+  .hscrd{width:2rem;height:1px}
+  .hsub{flex-direction:column;align-items:flex-start;gap:1.2rem}
+  .hbtns{flex-direction:column;width:100%}
+  .hbtns .btn{text-align:center;width:100%}
+  .hwm{display:none}
+  .mgrid,.agrid,.hgrid{grid-template-columns:1fr;gap:3rem}
+  .mbadge{display:none}
+  .aphotos{order:-1}
+  .himg{display:none}
+  .sh{grid-template-columns:1fr;gap:2rem}
+  .sstrip{grid-template-columns:1fr 1fr;height:clamp(140px,40vw,220px)}
+  .sstrip .sph:last-child{display:none}
+  .scards{grid-template-columns:1fr 1fr}
+  .scard:nth-child(3n){border-right:1px solid rgba(255,255,255,.06)}
+  .scard:nth-child(2n){border-right:none}
+  .sband{grid-template-columns:1fr;gap:1.5rem}
+  .fi{grid-template-columns:1fr;text-align:center;gap:1.2rem}
+  .fcon{text-align:center;align-items:center}
+  .fb{justify-content:center}
+}
+@media(max-width:600px){
+  .hh1{font-size:clamp(2.4rem,11vw,3.6rem);line-height:.95}
+  .hl2{padding-left:.6rem}.hl3{padding-left:1.2rem}
+  .hstrap{font-size:.9rem}
+  .scards{grid-template-columns:1fr}
+  .scard{border-right:none}
+  .scard:nth-child(3n){border-right:none}
+  .sstrip{grid-template-columns:1fr;height:clamp(160px,50vw,220px)}
+  .sstrip .sph:not(:first-child){display:none}
+  .aphotos img:not(:first-child){height:44vw}
+}
+@media(max-width:680px){
+  .lbin{grid-template-columns:1fr}
+  .lbph{display:none}
+  .lbfm{padding:2.5rem 1.5rem 2rem}
+  .lbrow{grid-template-columns:1fr}
 }
-.manifesto-img-wrap { position: relative; }
-.manifesto-img-wrap img {
-  width: 100%; aspect-ratio: 4/5;
-  object-fit: cover; object-position: center 15%; display: block;
-}
-.manifesto-badge {
-  position: absolute; bottom: -1.2rem; right: -1.2rem;
-  background: var(--burgundy); padding: 1.2rem 1.5rem; max-width: 200px;
-  box-shadow: 0 4px 20px rgba(66,32,32,0.25);
-}
-.manifesto-badge p {
-  font-family: 'Cormorant', serif; font-style: italic;
-  font-size: 1rem; color: var(--nude); line-height: 1.45;
-}
-.manifesto-text h2 { font-size: clamp(2rem, 3.5vw, 3.2rem); }
-.pullquote {
-  font-family: 'Cormorant', serif; font-style: italic;
-  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
-  color: var(--blushed); line-height: 1.5;
-  padding-left: 1.2rem; border-left: 2px solid var(--nude);
-  margin: 1.8rem 0;
-}
-
-/* ── ABOUT ── */
-#about { background: #EAE5D5; }
-.about-grid {
-  display: grid; grid-template-columns: 6fr 5fr;
-  gap: clamp(3rem, 7vw, 7rem); align-items: start;
-}
-.about-text h2 { font-size: clamp(2rem, 3.5vw, 3.2rem); }
-.tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 2rem; }
-.tag {
-  font-size: 0.58rem; font-weight: 400;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: #7B7458; border: 1px solid rgba(123,116,88,0.3);
-  padding: 0.3rem 0.8rem;
-}
-.about-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
-.about-photos img:first-child {
-  grid-column: 1 / -1; height: clamp(200px, 28vw, 320px);
-  width: 100%; object-fit: cover; object-position: center 30%;
-}
-.about-photos img:not(:first-child) {
-  height: clamp(130px, 18vw, 210px); width: 100%;
-  object-fit: cover; object-position: center 25%;
-}
-
-/* ═══════════════════════════════════════════
-   SERVICES — REDESIGNED
-═══════════════════════════════════════════ */
-#services {
-  background: var(--charcoal);
-  overflow: hidden;
-}
-
-/* Header strip */
-.services-header {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(2rem, 5vw, 6rem);
-  align-items: end;
-  padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 5vw, 4.5rem);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-#services .t-label { color: var(--gold-lt); }
-#services .t-display { color: var(--ivory); }
-#services .t-display em { color: var(--nude); }
-#services .rule { background: var(--gold); opacity: 0.5; }
-.services-header h2 { font-size: clamp(2.2rem, 3.8vw, 3.6rem); }
-.services-header-right {
-  display: flex; flex-direction: column; justify-content: flex-end;
-  gap: 1.5rem;
-}
-.services-header-right .t-body { color: var(--feathers); max-width: 420px; }
-.services-header-right .t-body p + p { margin-top: 0.8rem; }
-.services-intro-note {
-  font-size: 0.72rem; font-weight: 400;
-  letter-spacing: 0.06em;
-  color: var(--muted);
-  font-family: 'Cormorant', serif;
-  font-style: italic;
-  border-left: 2px solid rgba(140,114,72,0.4);
-  padding-left: 1rem;
-  line-height: 1.6;
-}
-
-/* Photo strip between header and cards */
-.services-photo-strip {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  height: clamp(180px, 22vw, 300px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.strip-photo {
-  overflow: hidden; position: relative;
-}
-.strip-photo img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: center 20%;
-  filter: brightness(0.55) saturate(0.7);
-  transition: filter 0.5s ease, transform 0.6s ease;
-}
-.strip-photo:nth-child(1) img { object-position: center 15%; }
-.strip-photo:nth-child(2) img { object-position: center 30%; }
-.strip-photo:nth-child(3) img { object-position: center 25%; }
-.strip-photo:hover img {
-  filter: brightness(0.75) saturate(0.85);
-  transform: scale(1.04);
-}
-.strip-photo::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(28,25,23,0.5) 0%, transparent 60%);
-  pointer-events: none;
-}
-.strip-divider {
-  width: 1px;
-  background: rgba(255,255,255,0.06);
-  align-self: stretch;
-  display: none; /* handled by grid gap */
-}
-
-/* Service cards grid */
-.svc-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-top: 1px solid rgba(255,255,255,0.06);
-}
-.svc-card {
-  padding: 2.4rem clamp(1.5rem, 3vw, 2.8rem);
-  border-right: 1px solid rgba(255,255,255,0.06);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  display: flex; flex-direction: column; gap: 1rem;
-  position: relative;
-  transition: background 0.3s ease;
-  cursor: default;
-}
-.svc-card:nth-child(3n) { border-right: none; }
-.svc-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--burgundy), var(--gold));
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.svc-card:hover { background: rgba(66,32,32,0.18); }
-.svc-card:hover::before { opacity: 1; }
-
-.svc-card-top {
-  display: flex; align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-}
-.svc-card-num {
-  font-family: 'Cormorant', serif;
-  font-size: 0.78rem; font-weight: 300;
-  color: rgba(140,114,72,0.55);
-  letter-spacing: 0.1em;
-  line-height: 1;
-  padding-top: 0.15rem;
-  flex-shrink: 0;
-}
-.svc-card-icon {
-  width: 32px; height: 32px;
-  opacity: 0.35;
-  flex-shrink: 0;
-}
-.svc-card-name {
-  font-family: 'Cormorant', serif;
-  font-size: clamp(1.15rem, 1.6vw, 1.4rem);
-  font-weight: 400;
-  color: var(--ivory);
-  line-height: 1.2;
-  flex: 1;
-}
-.svc-card-desc {
-  font-size: 0.84rem;
-  color: var(--feathers);
-  line-height: 1.8;
-  flex: 1;
-}
-.svc-card-tag {
-  font-size: 0.52rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #947850;
-  opacity: 0.7;
-  font-weight: 500;
-  margin-top: auto;
-  padding-top: 0.8rem;
-  border-top: 1px solid rgba(255,255,255,0.05);
-}
-
-/* Bottom band */
-.services-band {
-  background: var(--burgundy);
-  padding: 2.8rem clamp(1.5rem, 5vw, 4rem);
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 3rem;
-}
-.services-band-text {}
-.services-band-text p {
-  font-family: 'Cormorant', serif; font-style: italic;
-  font-size: clamp(1rem, 1.6vw, 1.25rem);
-  color: var(--nude); line-height: 1.65; max-width: 560px;
-}
-.services-band-text small {
-  display: block;
-  margin-top: 0.6rem;
-  font-size: 0.65rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(189,164,155,0.5);
-  font-family: 'Jost', sans-serif;
-  font-style: normal;
-}
-.services-band-actions {
-  display: flex; flex-direction: column; gap: 0.6rem;
-  align-items: flex-end;
-}
-
-/* ── HOW ── */
-#how { background: #E9E6D7; }
-.how-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: clamp(3rem, 7vw, 7rem); align-items: start;
-}
-.how-text h2 { font-size: clamp(2rem, 3.5vw, 3.2rem); }
-.steps { margin-top: 2.5rem; display: flex; flex-direction: column; }
-.step {
-  display: grid; grid-template-columns: 2.8rem 1fr;
-  gap: 1.2rem; padding: 1.8rem 0;
-  border-bottom: 1px solid rgba(90,79,74,0.15);
-  align-items: start;
-}
-.step:first-child { padding-top: 0; }
-.step-n {
-  font-family: 'Cormorant', serif; font-size: 2rem;
-  font-weight: 300; color: var(--nude); line-height: 1; padding-top: 0.15rem;
-}
-.step-body h3 {
-  font-size: 0.66rem; font-weight: 500;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--charcoal); margin-bottom: 0.5rem;
-}
-.step-body p { font-size: 0.9rem; color: var(--mid); line-height: 1.8; }
-.how-image img {
-  width: 100%; aspect-ratio: 3/4;
-  object-fit: cover; object-position: center 20%;
-  display: block;
-  position: sticky; top: calc(var(--nav-h) + 2rem);
-}
-
-/* ── FULL BLEED QUOTE ── */
-#quote {
-  position: relative; min-height: 62vh;
-  display: flex; align-items: center; justify-content: center; overflow: hidden;
-}
-.quote-bg {
-  position: absolute; inset: 0;
-  background-size: cover; background-position: center 20%;
-  filter: brightness(0.22) saturate(0.5);
-}
-.quote-content {
-  position: relative; z-index: 1; text-align: center;
-  padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 10vw, 10rem);
-  max-width: 900px;
-}
-.quote-content blockquote {
-  font-family: 'Cormorant', serif; font-style: italic;
-  font-weight: 300; font-size: clamp(1.8rem, 4vw, 3.4rem);
-  color: var(--ivory); line-height: 1.3; margin-bottom: 2.5rem;
-}
-.quote-content blockquote em { color: var(--nude); }
-
-/* ── CONSULT ── */
-#consult { background: var(--cream); text-align: center; }
-#consult .t-label { margin-bottom: 1rem; }
-#consult h2 {
-  font-size: clamp(2rem, 4vw, 3.4rem);
-  max-width: 520px; margin: 0.4rem auto 0;
-}
-#consult .rule { margin: 1.4rem auto 2rem; }
-#consult .t-body {
-  max-width: 480px; margin: 0 auto 2.5rem; text-align: left;
-}
-.cta-row {
-  display: flex; gap: 0.7rem;
-  justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem;
-}
-.btn-wa { display: inline-flex; align-items: center; gap: 0.5rem; }
-.contact-detail { font-size: 0.82rem; color: var(--muted); }
-.contact-detail a {
-  color: var(--mid);
-  border-bottom: 1px solid rgba(92,81,76,0.25);
-  transition: border-color 0.2s, color 0.2s;
-}
-.contact-detail a:hover { color: var(--charcoal); border-color: var(--charcoal); }
-
-/* ── FOOTER ── */
-footer {
-  background: var(--charcoal);
-  padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 5vw, 4rem);
-}
-.footer-inner {
-  display: grid; grid-template-columns: 1fr auto 1fr;
-  align-items: center; gap: 2rem;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
-  margin-bottom: clamp(1rem, 2vw, 1.5rem);
-}
-.footer-brand-name {
-  font-family: 'Cormorant', serif; font-size: 1.1rem;
-  font-weight: 400; color: var(--ivory); display: block; margin-bottom: 0.2rem;
-}
-.footer-brand-sub {
-  font-size: 0.52rem; letter-spacing: 0.24em;
-  text-transform: uppercase; color: var(--muted);
-}
-.footer-tagline {
-  font-family: 'Cormorant', serif; font-style: italic;
-  font-size: 0.92rem; color: var(--nude); text-align: center;
-}
-.footer-contact {
-  text-align: right; display: flex;
-  flex-direction: column; gap: 0.25rem;
-}
-.footer-contact a {
-  font-size: 0.7rem; color: var(--muted);
-  letter-spacing: 0.04em; transition: color 0.2s;
-}
-.footer-contact a:hover { color: var(--ivory); }
-.footer-bottom {
-  display: flex; justify-content: space-between;
-  align-items: center; flex-wrap: wrap; gap: 0.5rem;
-}
-.footer-bottom span {
-  font-size: 0.6rem; color: rgba(138,127,121,0.45); letter-spacing: 0.08em;
-}
-
-/* ── REVEAL ── */
-.reveal {
-  opacity: 0; transform: translateY(18px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal.visible { opacity: 1; transform: none; }
-.reveal-d1 { transition-delay: 0.1s; }
-.reveal-d2 { transition-delay: 0.2s; }
-.reveal-d3 { transition-delay: 0.3s; }
-.reveal-d4 { transition-delay: 0.4s; }
-.reveal-d5 { transition-delay: 0.5s; }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 900px) {
-  .nav-links, .nav-cta { display: none; }
-  .nav-hamburger { display: flex; }
-
-  .hero-h1 { font-size: clamp(2.8rem, 10vw, 5.5rem); }
-  .hero-h1-line2 { padding-left: clamp(0.8rem, 3vw, 2.5rem); }
-  .hero-h1-line3 { padding-left: clamp(1.6rem, 6vw, 4rem); }
-  .hero-content { grid-template-columns: 1fr; gap: 1.5rem; padding-bottom: clamp(2.5rem, 5vh, 4rem); padding-left: clamp(1.2rem, 4vw, 3rem); padding-right: clamp(1.2rem, 4vw, 3rem); }
-  .hero-meta { flex-direction: row; align-items: center; justify-content: flex-start; }
-  .hero-scroll { flex-direction: row; }
-  .hero-scroll-label { writing-mode: horizontal-tb; }
-  .hero-scroll-line { width: 2rem; height: 1px; }
-  .hero-sub { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
-  .hero-buttons { flex-direction: column; width: 100%; }
-  .hero-buttons .btn { text-align: center; width: 100%; }
-  .hero-wordmark { display: none; }
-
-  .manifesto-grid, .about-grid, .how-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .manifesto-badge { display: none; }
-  .about-photos { order: -1; }
-  .how-image { display: none; }
-
-  /* Services responsive */
-  .services-header { grid-template-columns: 1fr; gap: 2rem; }
-  .services-photo-strip { grid-template-columns: 1fr 1fr; height: clamp(140px, 40vw, 220px); }
-  .services-photo-strip .strip-photo:last-child { display: none; }
-  .svc-cards { grid-template-columns: 1fr 1fr; }
-  .svc-card:nth-child(3n) { border-right: 1px solid rgba(255,255,255,0.06); }
-  .svc-card:nth-child(2n) { border-right: none; }
-  .services-band { grid-template-columns: 1fr; gap: 1.5rem; }
-  .services-band-actions { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
-
-  .footer-inner { grid-template-columns: 1fr; text-align: center; gap: 1.2rem; }
-  .footer-contact { text-align: center; align-items: center; }
-  .footer-bottom { justify-content: center; }
-}
-
-@media (max-width: 600px) {
-  .hero-h1 { font-size: clamp(2.4rem, 11vw, 3.6rem); line-height: 0.95; }
-  .hero-h1-line2 { padding-left: 0.6rem; }
-  .hero-h1-line3 { padding-left: 1.2rem; }
-  .hero-strapline { font-size: 0.9rem; }
-  .svc-cards { grid-template-columns: 1fr; }
-  .svc-card { border-right: none; }
-  .svc-card:nth-child(3n) { border-right: none; }
-  .services-photo-strip { grid-template-columns: 1fr; height: clamp(160px, 50vw, 220px); }
-  .services-photo-strip .strip-photo:not(:first-child) { display: none; }
-  .about-photos img:not(:first-child) { height: 44vw; }
-}
-
-/* ── CONTACT LIGHTBOX ── */
-#contact-lightbox {
-  position: fixed; inset: 0; z-index: 2000;
-  display: flex; align-items: center; justify-content: center;
-  padding: 1rem;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.35s ease;
-}
-#contact-lightbox.open {
-  opacity: 1; pointer-events: all;
-}
-.lb-backdrop {
-  position: absolute; inset: 0;
-  background: rgba(28,25,23,0.72);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-}
-.lb-panel {
-  position: relative; z-index: 1;
-  background: var(--cream);
-  width: 100%; max-width: 860px;
-  max-height: 92vh; overflow-y: auto;
-  transform: translateY(20px) scale(0.98);
-  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
-  display: flex; flex-direction: column;
-}
-#contact-lightbox.open .lb-panel {
-  transform: translateY(0) scale(1);
-}
-.lb-close {
-  position: absolute; top: 1.2rem; right: 1.2rem;
-  z-index: 10; background: var(--parchment); border: none;
-  width: 36px; height: 36px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--mid); transition: background 0.2s, color 0.2s;
-}
-.lb-close:hover { background: var(--charcoal); color: var(--cream); }
-
-.lb-inner {
-  display: grid; grid-template-columns: 280px 1fr;
-  min-height: 520px;
-}
-.lb-left {
-  position: relative; overflow: hidden; flex-shrink: 0;
-}
-.lb-left img {
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: center top;
-  display: block; filter: brightness(0.6) saturate(0.75);
-}
-.lb-left-overlay {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column;
-  justify-content: flex-end;
-  padding: 2rem 1.6rem;
-  background: linear-gradient(to top, rgba(28,25,23,0.65) 0%, transparent 55%);
-}
-.lb-aside-quote {
-  font-family: 'Cormorant', serif; font-style: italic;
-  font-size: 1.05rem; color: var(--nude); line-height: 1.5;
-  margin-top: 0.4rem;
-}
-.lb-right {
-  padding: 3rem 2.4rem 2.4rem;
-  display: flex; flex-direction: column;
-}
-.lb-title { font-size: clamp(1.5rem, 2.5vw, 2rem); margin-top: 0.3rem; }
-
-/* Form fields */
-.lb-field-row {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
-  margin-bottom: 1rem;
-}
-.lb-field {
-  display: flex; flex-direction: column; gap: 0.4rem;
-  margin-bottom: 1rem;
-}
-.lb-field:last-child { margin-bottom: 0; }
-.lb-field label {
-  font-size: 0.6rem; font-weight: 500;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--mid);
-}
-.lb-field input,
-.lb-field select,
-.lb-field textarea {
-  font-family: 'Jost', sans-serif; font-size: 0.88rem;
-  font-weight: 300; color: var(--charcoal);
-  background: var(--ivory);
-  border: 1px solid var(--parchment);
-  padding: 0.7rem 0.9rem;
-  outline: none; width: 100%;
-  transition: border-color 0.2s, background 0.2s;
-  -webkit-appearance: none; appearance: none;
-  border-radius: 0;
-}
-.lb-field input::placeholder,
-.lb-field textarea::placeholder { color: var(--muted); }
-.lb-field input:focus,
-.lb-field select:focus,
-.lb-field textarea:focus {
-  border-color: var(--gold); background: var(--cream);
-}
-.lb-field select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A7F79' stroke-width='1.2' fill='none'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.9rem center;
-  padding-right: 2.2rem;
-  cursor: pointer;
-}
-.lb-field textarea { resize: vertical; min-height: 100px; }
-
-.lb-form-footer {
-  display: flex; align-items: center; gap: 1.4rem;
-  margin-top: 1.6rem; flex-wrap: wrap;
-}
-.lb-submit { flex-shrink: 0; }
-.lb-submit.loading { opacity: 0.6; pointer-events: none; }
-.lb-privacy {
-  font-size: 0.72rem; color: var(--muted);
-  font-style: italic; font-family: 'Cormorant', serif;
-}
-
-/* Field error state */
-.lb-field input.error,
-.lb-field select.error,
-.lb-field textarea.error { border-color: var(--blushed); }
-.lb-field .lb-error-msg {
-  font-size: 0.6rem; color: var(--blushed);
-  letter-spacing: 0.08em; display: none;
-}
-.lb-field .lb-error-msg.show { display: block; }
-
-/* Success state */
-.lb-success-inner {
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center;
-  padding: 3rem 1rem; flex: 1;
-  min-height: 300px;
-}
-.lb-success-icon {
-  width: 60px; height: 60px;
-  border: 1px solid var(--gold);
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 1.5rem;
-}
-
-/* Lightbox responsive */
-@media (max-width: 680px) {
-  .lb-inner { grid-template-columns: 1fr; }
-  .lb-left { display: none; }
-  .lb-right { padding: 2.5rem 1.5rem 2rem; }
-  .lb-field-row { grid-template-columns: 1fr; }
-}
-
 </style>
 </head>
 <body>
 
+<!-- GATE -->
+<div id="gate">
+  <div class="gate-bg"><img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/62353545_1172949436219414_8206268943019540480_n.jpg?raw=true" alt="" aria-hidden="true"/></div>
+  <div class="gate-box">
+    <p class="gate-logo">Sing Like No One Else</p>
+    <p class="gate-sub">Olivia Hyde · Artist Mentorship</p>
+    <div class="gate-div"></div>
+    <p class="gate-hint">Enter password to continue</p>
+    <input type="password" id="gi" placeholder="••••••" autocomplete="off"/>
+    <p id="gm">Incorrect password — try again.</p>
+    <button id="gb">Enter Site</button>
+    <p class="gate-note">Preview · Olivia Hyde 2026</p>
+  </div>
+</div>
+
 <!-- NAV -->
 <nav id="nav">
-  <a href="#" class="nav-brand">
-    <span class="nav-brand-name">Sing Like No One Else</span>
-    <span class="nav-brand-sub">Olivia Hyde · Artist Mentorship</span>
-  </a>
-  <ul class="nav-links">
+  <a href="#" class="nbrand"><span class="nbn">Sing Like No One Else</span><span class="nbs">Olivia Hyde · Artist Mentorship</span></a>
+  <ul class="nlinks">
     <li><a href="#manifesto">About</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#how">How It Works</a></li>
     <li><a href="#consult">Contact</a></li>
   </ul>
-  <a href="#consult" class="nav-cta">Free Consultation</a>
-  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
-    <span></span><span></span><span></span>
-  </button>
+  <a href="#consult" class="ncta">Free Consultation</a>
+  <button id="hbg" aria-label="Open menu"><span></span><span></span><span></span></button>
 </nav>
-<div class="mobile-menu" id="mobile-menu">
-  <a href="#manifesto" class="mob-link">About</a>
-  <a href="#services" class="mob-link">Services</a>
-  <a href="#how" class="mob-link">How It Works</a>
-  <a href="#consult" class="mob-link">Contact</a>
-  <a href="#consult" class="mob-cta">Free Consultation</a>
+
+<!-- MOBILE MENU -->
+<div id="mm">
+  <div id="mmb"></div>
+  <div id="mmp">
+    <div id="mmh">
+      <span id="mmhb">Sing Like No One Else</span>
+      <button id="mmc" aria-label="Close">&#215;</button>
+    </div>
+    <nav id="mml">
+      <a href="#manifesto">About</a>
+      <a href="#services">Services</a>
+      <a href="#how">How It Works</a>
+      <a href="#consult">Contact</a>
+    </nav>
+    <div id="mmf">
+      <a href="#consult" id="mmct">Book Free Consultation</a>
+      <div class="mmcs">
+        <a href="mailto:olivia@singlikenooneelse.co.uk">olivia@singlikenooneelse.co.uk</a>
+        <a href="tel:+447960887546">07960 887546</a>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- HERO -->
 <section id="hero">
-
-  <!-- Full-bleed background -->
-  <div class="hero-bg">
-    <img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/62353545_1172949436219414_8206268943019540480_n.jpg?raw=true" alt="Olivia Hyde" />
-  </div>
-
-  <!-- Wordmark bar -->
-  <div class="hero-wordmark">
-    <span class="hero-wordmark-name">Sing Like No One Else &nbsp;·&nbsp; Olivia Hyde</span>
-    <span class="hero-wordmark-loc">Artist Mentorship &nbsp;·&nbsp; UK</span>
-  </div>
-
-  <!-- Main content -->
-  <div class="hero-content">
-    <div class="hero-copy">
-      <h1 class="hero-h1">
-        <span class="reveal reveal-d1">For Artists</span>
-        <span class="hero-h1-line2 reveal reveal-d2">With <em>Something</em></span>
-        <span class="hero-h1-line3 reveal reveal-d3"><em>Real</em> To Say</span>
-      </h1>
-      <div class="hero-sub reveal reveal-d3">
-        <p class="hero-strapline">Technical development, creative direction &amp; honest mentorship for original artists.</p>
-        <div class="hero-buttons">
-          <a href="#consult" class="btn btn-burg">Book Free Consultation</a>
-          <a href="#manifesto" class="btn btn-ivory-outline">Learn More</a>
-        </div>
+  <div class="hbg"><img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/62353545_1172949436219414_8206268943019540480_n.jpg?raw=true" alt="Olivia Hyde"/></div>
+  <div class="hwm"><span class="hwmn">Sing Like No One Else &nbsp;·&nbsp; Olivia Hyde</span><span class="hwml">Artist Mentorship &nbsp;·&nbsp; UK</span></div>
+  <div class="hcon">
+    <div>
+      <h1 class="hh1"><span class="rv d1">For Artists</span><span class="hl2 rv d2">With <em>Something</em></span><span class="hl3 rv d3"><em>Real</em> To Say</span></h1>
+      <div class="hsub rv d3">
+        <p class="hstrap">Technical development, creative direction &amp; honest mentorship for original artists.</p>
+        <div class="hbtns"><a href="#consult" class="btn btn-bg">Book Free Consultation</a><a href="#manifesto" class="btn btn-wh">Learn More</a></div>
       </div>
     </div>
-
-    <div class="hero-meta reveal reveal-d4">
-      <div class="hero-scroll" onclick="document.getElementById('manifesto').scrollIntoView({behavior:'smooth'})">
-        <span class="hero-scroll-label">Scroll</span>
-        <div class="hero-scroll-line"></div>
+    <div class="hmeta rv d4">
+      <div class="hscr" onclick="document.getElementById('manifesto').scrollIntoView({behavior:'smooth'})">
+        <span class="hscrl">Scroll</span><div class="hscrd"></div>
       </div>
     </div>
   </div>
-
 </section>
 
 <!-- TICKER -->
-<div class="ticker" role="marquee" aria-label="Services overview">
-  <div class="ticker-track">
-    <span>Singing</span><span class="sep">·</span><span>Songwriting</span><span class="sep">·</span>
-    <span>Performance</span><span class="sep">·</span><span>Arranging</span><span class="sep">·</span>
-    <span>Production</span><span class="sep">·</span><span>Branding</span><span class="sep">·</span>
-    <span>Music Video Direction</span><span class="sep">·</span><span>Creative Direction</span><span class="sep">·</span>
-    <span>Confidence &amp; Resilience</span><span class="sep">·</span><span>Social Media Strategy</span><span class="sep">·</span>
-    <span>Singing</span><span class="sep">·</span><span>Songwriting</span><span class="sep">·</span>
-    <span>Performance</span><span class="sep">·</span><span>Arranging</span><span class="sep">·</span>
-    <span>Production</span><span class="sep">·</span><span>Branding</span><span class="sep">·</span>
-    <span>Music Video Direction</span><span class="sep">·</span><span>Creative Direction</span><span class="sep">·</span>
-    <span>Confidence &amp; Resilience</span><span class="sep">·</span><span>Social Media Strategy</span><span class="sep">·</span>
-  </div>
-</div>
+<div class="tkr"><div class="tkrt">
+  <span>Singing</span><span class="sep">·</span><span>Songwriting</span><span class="sep">·</span><span>Performance</span><span class="sep">·</span><span>Arranging</span><span class="sep">·</span><span>Production</span><span class="sep">·</span><span>Branding</span><span class="sep">·</span><span>Music Video Direction</span><span class="sep">·</span><span>Creative Direction</span><span class="sep">·</span><span>Confidence &amp; Resilience</span><span class="sep">·</span><span>Social Media Strategy</span><span class="sep">·</span>
+  <span>Singing</span><span class="sep">·</span><span>Songwriting</span><span class="sep">·</span><span>Performance</span><span class="sep">·</span><span>Arranging</span><span class="sep">·</span><span>Production</span><span class="sep">·</span><span>Branding</span><span class="sep">·</span><span>Music Video Direction</span><span class="sep">·</span><span>Creative Direction</span><span class="sep">·</span><span>Confidence &amp; Resilience</span><span class="sep">·</span><span>Social Media Strategy</span><span class="sep">·</span>
+</div></div>
 
 <!-- MANIFESTO -->
-<section id="manifesto" class="section">
-  <div class="manifesto-grid">
-    <div class="manifesto-img-wrap reveal">
-      <img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/35694868_255164948566121_6544878797248790528_n.jpg?raw=true" alt="Olivia Hyde" />
-      <div class="manifesto-badge"><p>"I understand that world."</p></div>
-    </div>
-    <div class="manifesto-text reveal reveal-d1">
-      <span class="t-label">The Reality</span>
-      <h2 class="t-display">Making original<br>music can be <em>brutal.</em></h2>
+<section id="manifesto" class="sec">
+  <div class="mgrid">
+    <div class="mimg rv"><img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/35694868_255164948566121_6544878797248790528_n.jpg?raw=true" alt="Olivia Hyde"/><div class="mbadge"><p>"I understand that world."</p></div></div>
+    <div class="mtxt rv d1">
+      <span class="lbl">The Reality</span>
+      <h2 class="dsp">Making original<br>music can be <em>brutal.</em></h2>
       <div class="rule"></div>
-      <div class="t-body">
+      <div class="bdy">
         <p>It asks a lot of you. Not just creatively, but emotionally. You are expected to make work that is personal, vulnerable and true, then place it in front of the world and somehow stay sane while people ignore it, misunderstand it, admire it or tear it apart.</p>
         <p>Add rejection, inconsistency, self-doubt, online bullying, sexism, racism, homophobia and the general strangeness of trying to build something meaningful in public — and it is no wonder so many talented people <strong>lose confidence or lose their way.</strong></p>
-        <div class="pullquote">I know what it is to build something from the ground up, to wear every hat, and to keep going when things are difficult.</div>
+        <div class="pq">I know what it is to build something from the ground up, to wear every hat, and to keep going when things are difficult.</div>
         <p>I'm a singer-songwriter with over ten years of experience fronting a metal band, alongside hands-on work in songwriting, performance, production, branding, marketing and visual direction. I also make all my own music videos.</p>
       </div>
     </div>
@@ -1032,304 +410,124 @@ footer {
 </section>
 
 <!-- ABOUT -->
-<section id="about" class="section">
-  <div class="about-grid">
-    <div class="about-text reveal">
-      <span class="t-label">The Mentorship</span>
-      <h2 class="t-display">More than a<br><em>better singer.</em></h2>
+<section id="about" class="sec">
+  <div class="agrid">
+    <div class="atxt rv">
+      <span class="lbl">The Mentorship</span>
+      <h2 class="dsp">More than a<br><em>better singer.</em></h2>
       <div class="rule"></div>
-      <div class="t-body">
+      <div class="bdy">
         <p>My mentorship programmes are not just about becoming a better singer, songwriter or performer. They are about becoming <strong>stronger, clearer and more resilient</strong> as an artist and as a person.</p>
         <p>Becoming the best artist you can be is not just about technical skills — it is about understanding yourself and knowing how to cope when things get hard.</p>
         <p>No two artists are the same, so no two packages are the same either. We build your programme together around your strengths, your goals and the areas where you need the most support.</p>
       </div>
-      <div class="tags">
-        <span class="tag">10+ Years Experience</span>
-        <span class="tag">Original Artist</span>
-        <span class="tag">Metal · Indie · Folk</span>
-        <span class="tag">Music Video Director</span>
-        <span class="tag">Songwriter</span>
-        <span class="tag">Performer</span>
-      </div>
+      <div class="tags"><span class="tag">10+ Years Experience</span><span class="tag">Original Artist</span><span class="tag">Metal · Indie · Folk</span><span class="tag">Music Video Director</span><span class="tag">Songwriter</span><span class="tag">Performer</span></div>
     </div>
-    <div class="about-photos reveal reveal-d1">
-      <img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/62331531_2294124670855268_4219635674162135040_n.jpg?raw=true" alt="Olivia on stage" />
-      <img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/62353545_1172949436219414_8206268943019540480_n.jpg?raw=true" alt="Olivia performing" />
-      <img src="https://raw.githubusercontent.com/9s4pr6gvvk-bot/singlikenooneelse/refs/heads/main/IMG_20210109_154824.jpg" alt="Olivia Hyde" />
+    <div class="aphotos rv d1">
+      <img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/62331531_2294124670855268_4219635674162135040_n.jpg?raw=true" alt="Olivia on stage"/>
+      <img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/62353545_1172949436219414_8206268943019540480_n.jpg?raw=true" alt="Olivia performing"/>
+      <img src="https://raw.githubusercontent.com/9s4pr6gvvk-bot/singlikenooneelse/refs/heads/main/IMG_20210109_154824.jpg" alt="Olivia Hyde"/>
     </div>
   </div>
 </section>
 
-<!-- SERVICES — REDESIGNED -->
+<!-- SERVICES -->
 <div id="services">
-
-  <!-- Header -->
-  <div class="services-header">
-    <div class="reveal">
-      <span class="t-label">What We Cover</span>
-      <h2 class="t-display">Built Around <em>You</em></h2>
-      <div class="rule"></div>
-    </div>
-    <div class="services-header-right reveal reveal-d1">
-      <div class="t-body">
-        <p>Sometimes what an artist needs is help with their technical skills. Sometimes it is strategy. Sometimes emotional support. Often all three.</p>
-        <p>Your programme can include any combination of the areas below — no set packages, only what genuinely serves you.</p>
-      </div>
-      <p class="services-intro-note">No two programmes are identical. We begin with a free conversation and build from there.</p>
+  <div class="sh">
+    <div class="rv"><span class="lbl">What We Cover</span><h2 class="dsp">Built Around <em>You</em></h2><div class="rule"></div></div>
+    <div class="shr rv d1">
+      <div class="bdy"><p>Sometimes what an artist needs is help with their technical skills. Sometimes it is strategy. Sometimes emotional support. Often all three.</p><p>Your programme can include any combination of the areas below — no set packages, only what genuinely serves you.</p></div>
+      <p class="snote">No two programmes are identical. We begin with a free conversation and build from there.</p>
     </div>
   </div>
-
-  <!-- Photo strip -->
-  <div class="services-photo-strip">
-    <div class="strip-photo">
-      <img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/62353545_1172949436219414_8206268943019540480_n.jpg?raw=true" alt="" aria-hidden="true" />
-    </div>
-    <div class="strip-photo">
-      <img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/62331531_2294124670855268_4219635674162135040_n.jpg?raw=true" alt="" aria-hidden="true" />
-    </div>
-    <div class="strip-photo">
-      <img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/35694868_255164948566121_6544878797248790528_n.jpg?raw=true" alt="" aria-hidden="true" />
-    </div>
+  <div class="sstrip">
+    <div class="sph"><img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/62353545_1172949436219414_8206268943019540480_n.jpg?raw=true" alt="" aria-hidden="true"/></div>
+    <div class="sph"><img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/62331531_2294124670855268_4219635674162135040_n.jpg?raw=true" alt="" aria-hidden="true"/></div>
+    <div class="sph"><img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/35694868_255164948566121_6544878797248790528_n.jpg?raw=true" alt="" aria-hidden="true"/></div>
   </div>
-
-  <!-- Service cards -->
-  <div class="svc-cards">
-
-    <div class="svc-card reveal">
-      <div class="svc-card-top">
-        <span class="svc-card-num">01</span>
-        <svg class="svc-card-icon" viewBox="0 0 24 24" fill="none" stroke="var(--gold-lt)" stroke-width="1" aria-hidden="true">
-          <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/>
-          <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8"/>
-        </svg>
-      </div>
-      <p class="svc-card-name">Voice &amp; Performance</p>
-      <p class="svc-card-desc">Singing technique, performance craft, stage presence, and the physical and emotional work of performing original material to real audiences.</p>
-      <span class="svc-card-tag">Technical · Embodied</span>
-    </div>
-
-    <div class="svc-card reveal reveal-d1">
-      <div class="svc-card-top">
-        <span class="svc-card-num">02</span>
-        <svg class="svc-card-icon" viewBox="0 0 24 24" fill="none" stroke="var(--gold-lt)" stroke-width="1" aria-hidden="true">
-          <path d="M9 18V5l12-2v13"/>
-          <circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
-        </svg>
-      </div>
-      <p class="svc-card-name">Songwriting &amp; Arranging</p>
-      <p class="svc-card-desc">Developing your voice as a songwriter, structural approaches, arrangement and production — from first idea to release-ready recording.</p>
-      <span class="svc-card-tag">Creative · Structural</span>
-    </div>
-
-    <div class="svc-card reveal reveal-d2">
-      <div class="svc-card-top">
-        <span class="svc-card-num">03</span>
-        <svg class="svc-card-icon" viewBox="0 0 24 24" fill="none" stroke="var(--gold-lt)" stroke-width="1" aria-hidden="true">
-          <rect x="2" y="2" width="20" height="20" rx="2"/>
-          <circle cx="12" cy="12" r="3"/>
-          <path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>
-        </svg>
-      </div>
-      <p class="svc-card-name">Music Video Direction</p>
-      <p class="svc-card-desc">Concept, production and visual direction. I make all my own music videos — I can help you bring yours to life on any budget.</p>
-      <span class="svc-card-tag">Visual · Directorial</span>
-    </div>
-
-    <div class="svc-card reveal">
-      <div class="svc-card-top">
-        <span class="svc-card-num">04</span>
-        <svg class="svc-card-icon" viewBox="0 0 24 24" fill="none" stroke="var(--gold-lt)" stroke-width="1" aria-hidden="true">
-          <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-          <path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/>
-        </svg>
-      </div>
-      <p class="svc-card-name">Branding &amp; Marketing</p>
-      <p class="svc-card-desc">Branding and social media strategies that feel authentic to who you are — not generic music industry templates that could belong to anyone.</p>
-      <span class="svc-card-tag">Strategic · Authentic</span>
-    </div>
-
-    <div class="svc-card reveal reveal-d1">
-      <div class="svc-card-top">
-        <span class="svc-card-num">05</span>
-        <svg class="svc-card-icon" viewBox="0 0 24 24" fill="none" stroke="var(--gold-lt)" stroke-width="1" aria-hidden="true">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/>
-        </svg>
-      </div>
-      <p class="svc-card-name">Confidence &amp; Resilience</p>
-      <p class="svc-card-desc">Mental health support specific to original artists. Dealing with hero worship, trolls and indifference — often all at the same time.</p>
-      <span class="svc-card-tag">Emotional · Grounding</span>
-    </div>
-
-    <div class="svc-card reveal reveal-d2">
-      <div class="svc-card-top">
-        <span class="svc-card-num">06</span>
-        <svg class="svc-card-icon" viewBox="0 0 24 24" fill="none" stroke="var(--gold-lt)" stroke-width="1" aria-hidden="true">
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-        </svg>
-      </div>
-      <p class="svc-card-name">Creative Direction</p>
-      <p class="svc-card-desc">Finding your artistic identity and developing a coherent visual and musical language that is unmistakably, consistently yours.</p>
-      <span class="svc-card-tag">Identity · Vision</span>
-    </div>
-
+  <div class="scards">
+    <div class="scard rv"><div class="sct"><span class="snum">01</span><svg class="sico" viewBox="0 0 24 24" fill="none" stroke="var(--glt)" stroke-width="1"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8"/></svg></div><p class="sname">Voice &amp; Performance</p><p class="sdesc">Singing technique, performance craft, stage presence, and the physical and emotional work of performing original material to real audiences.</p><span class="stag">Technical · Embodied</span></div>
+    <div class="scard rv d1"><div class="sct"><span class="snum">02</span><svg class="sico" viewBox="0 0 24 24" fill="none" stroke="var(--glt)" stroke-width="1"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div><p class="sname">Songwriting &amp; Arranging</p><p class="sdesc">Developing your voice as a songwriter, structural approaches, arrangement and production — from first idea to release-ready recording.</p><span class="stag">Creative · Structural</span></div>
+    <div class="scard rv d2"><div class="sct"><span class="snum">03</span><svg class="sico" viewBox="0 0 24 24" fill="none" stroke="var(--glt)" stroke-width="1"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div><p class="sname">Music Video Direction</p><p class="sdesc">Concept, production and visual direction. I make all my own music videos — I can help you bring yours to life on any budget.</p><span class="stag">Visual · Directorial</span></div>
+    <div class="scard rv"><div class="sct"><span class="snum">04</span><svg class="sico" viewBox="0 0 24 24" fill="none" stroke="var(--glt)" stroke-width="1"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></div><p class="sname">Branding &amp; Marketing</p><p class="sdesc">Branding and social media strategies that feel authentic to who you are — not generic music industry templates that could belong to anyone.</p><span class="stag">Strategic · Authentic</span></div>
+    <div class="scard rv d1"><div class="sct"><span class="snum">05</span><svg class="sico" viewBox="0 0 24 24" fill="none" stroke="var(--glt)" stroke-width="1"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div><p class="sname">Confidence &amp; Resilience</p><p class="sdesc">Mental health support specific to original artists. Dealing with hero worship, trolls and indifference — often all at the same time.</p><span class="stag">Emotional · Grounding</span></div>
+    <div class="scard rv d2"><div class="sct"><span class="snum">06</span><svg class="sico" viewBox="0 0 24 24" fill="none" stroke="var(--glt)" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><p class="sname">Creative Direction</p><p class="sdesc">Finding your artistic identity and developing a coherent visual and musical language that is unmistakably, consistently yours.</p><span class="stag">Identity · Vision</span></div>
   </div>
-
-  <!-- Bottom band -->
-  <div class="services-band reveal">
-    <div class="services-band-text">
-      <p>"Anyone guaranteeing to make you a star should be given a wide berth. I offer honest guidance, practical tools and real-world experience."</p>
-      <small>— Olivia Hyde, Sing Like No One Else</small>
-    </div>
-    <div class="services-band-actions">
-      <a href="#consult" class="btn btn-ivory-outline">Book a Consultation</a>
-    </div>
+  <div class="sband rv">
+    <div><p>"Anyone guaranteeing to make you a star should be given a wide berth. I offer honest guidance, practical tools and real-world experience."</p><small>— Olivia Hyde, Sing Like No One Else</small></div>
+    <a href="#consult" class="btn btn-wh">Book a Consultation</a>
   </div>
-
 </div>
 
 <!-- HOW -->
-<section id="how" class="section">
-  <div class="how-grid">
-    <div class="how-text">
-      <span class="t-label reveal">The Process</span>
-      <h2 class="t-display reveal">How We <em>Work</em></h2>
-      <div class="rule reveal"></div>
+<section id="how" class="sec">
+  <div class="hgrid">
+    <div class="htxt">
+      <span class="lbl rv">The Process</span>
+      <h2 class="dsp rv">How We <em>Work</em></h2>
+      <div class="rule rv"></div>
       <div class="steps">
-        <div class="step reveal">
-          <span class="step-n">01</span>
-          <div class="step-body">
-            <h3>Free Consultation</h3>
-            <p>We begin with a free conversation — no pressure, no obligation. I get a clear sense of where you are, where you want to go and what kind of support would genuinely help.</p>
-          </div>
-        </div>
-        <div class="step reveal">
-          <span class="step-n">02</span>
-          <div class="step-body">
-            <h3>Build Your Programme</h3>
-            <p>We build something around you. Your strengths, weaknesses and goals. One focused area, or a mixture — whatever you genuinely need most.</p>
-          </div>
-        </div>
-        <div class="step reveal">
-          <span class="step-n">03</span>
-          <div class="step-body">
-            <h3>Ongoing Support</h3>
-            <p>Regular sessions with honest feedback. Practical tools and thoughtful support from someone who has been in the trenches and knows what it costs to keep going.</p>
-          </div>
-        </div>
-        <div class="step reveal">
-          <span class="step-n">04</span>
-          <div class="step-body">
-            <h3>Create Something Real</h3>
-            <p>The goal is not a tick-box outcome — it is to help you become more of who you already are as an artist. Stronger, clearer and more connected to the work.</p>
-          </div>
-        </div>
+        <div class="step rv"><span class="stepn">01</span><div class="stepb"><h3>Free Consultation</h3><p>We begin with a free conversation — no pressure, no obligation. I get a clear sense of where you are, where you want to go and what kind of support would genuinely help.</p></div></div>
+        <div class="step rv"><span class="stepn">02</span><div class="stepb"><h3>Build Your Programme</h3><p>We build something around you. Your strengths, weaknesses and goals. One focused area, or a mixture — whatever you genuinely need most.</p></div></div>
+        <div class="step rv"><span class="stepn">03</span><div class="stepb"><h3>Ongoing Support</h3><p>Regular sessions with honest feedback. Practical tools and thoughtful support from someone who has been in the trenches and knows what it costs to keep going.</p></div></div>
+        <div class="step rv"><span class="stepn">04</span><div class="stepb"><h3>Create Something Real</h3><p>The goal is not a tick-box outcome — it is to help you become more of who you already are as an artist. Stronger, clearer and more connected to the work.</p></div></div>
       </div>
     </div>
-    <div class="how-image reveal reveal-d1">
-      <img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/62353545_1172949436219414_8206268943019540480_n.jpg?raw=true" alt="Olivia Hyde" />
-    </div>
+    <div class="himg rv d1"><img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/62353545_1172949436219414_8206268943019540480_n.jpg?raw=true" alt="Olivia Hyde"/></div>
   </div>
 </section>
 
 <!-- QUOTE -->
 <div id="quote">
-  <div class="quote-bg" style="background-image: url('https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/62331531_2294124670855268_4219635674162135040_n.jpg?raw=true');"></div>
-  <div class="quote-content reveal">
-    <blockquote>"Become stronger, clearer and more resilient<br>as an artist — and as a <em>person.</em>"</blockquote>
-    <a href="#consult" class="btn btn-gold-fill">Book Your Free Consultation</a>
-  </div>
+  <div class="qbg" style="background-image:url('https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/62331531_2294124670855268_4219635674162135040_n.jpg?raw=true');"></div>
+  <div class="qcon rv"><blockquote>"Become stronger, clearer and more resilient<br>as an artist — and as a <em>person.</em>"</blockquote><a href="#consult" class="btn btn-cr">Book Your Free Consultation</a></div>
 </div>
 
 <!-- CONSULT -->
-<section id="consult" class="section">
-  <span class="t-label reveal">Free Consultation</span>
-  <h2 class="t-display reveal" style="font-size:clamp(2rem,4vw,3.4rem); max-width:520px; margin:0.4rem auto 0;">Let's build something<br><em>that fits you.</em></h2>
-  <div class="rule reveal" style="margin-left:auto; margin-right:auto;"></div>
-  <div class="t-body reveal" style="text-align:left; max-width:480px; margin:0 auto 2.5rem;">
+<section id="consult" class="sec" style="text-align:center">
+  <span class="lbl rv">Free Consultation</span>
+  <h2 class="dsp rv" style="font-size:clamp(2rem,4vw,3.4rem);max-width:520px;margin:.4rem auto 0">Let's build something<br><em>that fits you.</em></h2>
+  <div class="rule rv" style="margin-left:auto;margin-right:auto"></div>
+  <div class="bdy rv" style="text-align:left;max-width:480px;margin:0 auto 2.5rem">
     <p>Consultations are free — get in touch and we can talk about your goals, where you feel stuck and what kind of support would help you move forward with more clarity, confidence and strength.</p>
     <p>Let's build a programme that fits you and helps you create something real.</p>
   </div>
-  <div class="cta-row reveal">
-    <button class="btn btn-solid" id="open-contact">Get In Touch</button>
-    <a href="https://wa.me/447960887546" class="btn btn-border btn-wa">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <div class="crow rv">
+    <button class="btn btn-dk" id="olb">Get In Touch</button>
+    <a href="https://wa.me/447960887546" class="btn btn-ol bwa">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       WhatsApp
     </a>
   </div>
-  <p class="contact-detail reveal">or call / WhatsApp: <a href="tel:+447960887546">07960 887546</a></p>
+  <p class="cnote rv">or call / WhatsApp: <a href="tel:+447960887546">07960 887546</a></p>
 </section>
 
-<!-- CONTACT LIGHTBOX -->
-<div id="contact-lightbox" role="dialog" aria-modal="true" aria-label="Contact form">
-  <div class="lb-backdrop" id="lb-backdrop"></div>
-  <div class="lb-panel">
-    <button class="lb-close" id="lb-close" aria-label="Close">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>
-    <div class="lb-inner">
-      <div class="lb-left">
-        <img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/IMG_20210109_154824.jpg?raw=true" alt="Olivia Hyde" />
-        <div class="lb-left-overlay">
-          <span class="t-label" style="color:var(--gold-lt);">Free Consultation</span>
-          <p class="lb-aside-quote">"No pressure. Just a conversation."</p>
+<!-- LIGHTBOX -->
+<div id="lb">
+  <div class="lbk" id="lbk"></div>
+  <div class="lbx">
+    <button class="lbcl" id="lbcl" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <div class="lbin">
+      <div class="lbph"><img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/IMG_20210109_154824.jpg?raw=true" alt="Olivia Hyde"/><div class="lbov"><span class="lbl" style="color:var(--glt)">Free Consultation</span><p class="lbq">"No pressure. Just a conversation."</p></div></div>
+      <div class="lbfm">
+        <span class="lbl">Say Hello</span>
+        <h2 class="dsp lbtit">Let's talk about<br><em>your music.</em></h2>
+        <div class="rule" style="margin-top:1.2rem"></div>
+        <div id="lbfw">
+          <div class="lbrow">
+            <div class="lbf"><label for="fn">Your name</label><input type="text" id="fn" placeholder="e.g. Alex Smith"/><span class="lbem"></span></div>
+            <div class="lbf"><label for="fe">Email</label><input type="email" id="fe" placeholder="you@example.com"/><span class="lbem"></span></div>
+          </div>
+          <div class="lbf"><label for="fs">What brings you here?</label><select id="fs"><option value="" disabled selected>Select a topic…</option><option>Voice &amp; Performance</option><option>Songwriting &amp; Arranging</option><option>Music Video Direction</option><option>Branding &amp; Marketing</option><option>Confidence &amp; Resilience</option><option>Creative Direction</option><option>General enquiry</option></select><span class="lbem"></span></div>
+          <div class="lbf"><label for="fm">Tell me a bit about where you are</label><textarea id="fm" rows="4" placeholder="What are you working on? Where do you feel stuck?"></textarea><span class="lbem"></span></div>
+          <div class="lbft"><button class="btn btn-dk lbsb" id="lbsb">Send Message</button><p class="lbpr">I'll reply personally within 48 hours.</p></div>
         </div>
-      </div>
-      <div class="lb-right">
-        <span class="t-label">Say Hello</span>
-        <h2 class="t-display lb-title">Let's talk about<br><em>your music.</em></h2>
-        <div class="rule" style="margin-top:1.2rem;"></div>
-
-        <div id="lb-form-wrap">
-          <div class="lb-field-row">
-            <div class="lb-field">
-              <label for="lf-name">Your name</label>
-              <input type="text" id="lf-name" placeholder="e.g. Alex Smith" autocomplete="name" />
-              <span class="lb-error-msg"></span>
-            </div>
-            <div class="lb-field">
-              <label for="lf-email">Email address</label>
-              <input type="email" id="lf-email" placeholder="you@example.com" autocomplete="email" />
-              <span class="lb-error-msg"></span>
-            </div>
-          </div>
-          <div class="lb-field">
-            <label for="lf-subject">What brings you here?</label>
-            <select id="lf-subject">
-              <option value="" disabled selected>Select a topic…</option>
-              <option>Voice &amp; Performance</option>
-              <option>Songwriting &amp; Arranging</option>
-              <option>Music Video Direction</option>
-              <option>Branding &amp; Marketing</option>
-              <option>Confidence &amp; Resilience</option>
-              <option>Creative Direction</option>
-              <option>General enquiry</option>
-            </select>
-            <span class="lb-error-msg"></span>
-          </div>
-          <div class="lb-field">
-            <label for="lf-message">Tell me a bit about where you are</label>
-            <textarea id="lf-message" rows="4" placeholder="What are you working on? Where do you feel stuck?"></textarea>
-            <span class="lb-error-msg"></span>
-          </div>
-          <div class="lb-form-footer">
-            <button class="btn btn-solid lb-submit" id="lb-submit">Send Message</button>
-            <p class="lb-privacy">I'll reply personally within 48 hours.</p>
-          </div>
+        <div class="lbok" id="lbok">
+          <div class="lbtk"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.2"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <h3 class="dsp" style="font-size:1.6rem;margin-bottom:.6rem">Message sent.</h3>
+          <p class="bdy" style="font-size:.88rem">Thank you for reaching out. Olivia will be in touch within 48 hours.</p>
+          <a href="https://wa.me/447960887546" class="btn btn-ol" style="margin-top:1.8rem;font-size:.6rem">Or WhatsApp instead</a>
         </div>
-
-        <div id="lb-success" style="display:none;">
-          <div class="lb-success-inner">
-            <div class="lb-success-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.2"><path d="M20 6 9 17l-5-5"/></svg>
-            </div>
-            <h3 class="t-display" style="font-size:1.6rem; color:var(--charcoal); margin-bottom:0.6rem;">Message sent.</h3>
-            <p class="t-body" style="font-size:0.88rem; color:var(--mid);">Thank you for reaching out. Olivia will be in touch within 48 hours.</p>
-            <a href="https://wa.me/447960887546" class="btn btn-border" style="margin-top:1.8rem; font-size:0.6rem;">
-              Or WhatsApp instead
-            </a>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
@@ -1337,104 +535,65 @@ footer {
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <div>
-      <span class="footer-brand-name">Sing Like No One Else</span>
-      <span class="footer-brand-sub">Olivia Hyde · Artist Mentorship</span>
-    </div>
-    <div class="footer-tagline">For artists with something real to say.</div>
-    <div class="footer-contact">
-      <a href="mailto:olivia@singlikenooneelse.co.uk">olivia@singlikenooneelse.co.uk</a>
-      <a href="tel:+447960887546">07960 887546</a>
-      <a href="https://singlikenooneelse.co.uk">singlikenooneelse.co.uk</a>
-    </div>
+  <div class="fi">
+    <div><span class="fbn">Sing Like No One Else</span><span class="fbs">Olivia Hyde · Artist Mentorship</span></div>
+    <div class="ftag">For artists with something real to say.</div>
+    <div class="fcon"><a href="mailto:olivia@singlikenooneelse.co.uk">olivia@singlikenooneelse.co.uk</a><a href="tel:+447960887546">07960 887546</a><a href="https://singlikenooneelse.co.uk">singlikenooneelse.co.uk</a></div>
   </div>
-  <div class="footer-bottom">
-    <span>© 2026 Olivia Hyde · Sing Like No One Else</span>
-    <span>singlikenooneelse.co.uk</span>
-  </div>
+  <div class="fb"><span>© 2026 Olivia Hyde · Sing Like No One Else</span><span>singlikenooneelse.co.uk</span></div>
 </footer>
 
 <script>
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 8);
-  }, { passive: true });
+// GATE
+var gate=document.getElementById('gate'),gi=document.getElementById('gi'),gb=document.getElementById('gb'),gm=document.getElementById('gm');
+document.body.style.overflow='hidden';
+function unlock(){
+  if(gi.value==='Olivia'){gate.classList.add('hide');document.body.style.overflow='';setTimeout(function(){gate.style.display='none';},650);}
+  else{gi.classList.add('err');gm.classList.add('show');gi.value='';setTimeout(function(){gi.classList.remove('err');},400);}
+}
+gb.addEventListener('click',unlock);
+gi.addEventListener('keydown',function(e){if(e.key==='Enter')unlock();});
 
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobile-menu');
-  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+// NAV
+var nav=document.getElementById('nav');
+window.addEventListener('scroll',function(){nav.classList.toggle('sc',window.scrollY>8);},{passive:true});
 
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+// MOBILE MENU
+var hbg=document.getElementById('hbg'),mm=document.getElementById('mm'),mmb=document.getElementById('mmb'),mmc=document.getElementById('mmc');
+hbg.addEventListener('click',function(){mm.classList.add('open');document.body.style.overflow='hidden';});
+function closeMM(){mm.classList.remove('open');document.body.style.overflow='';}
+mmb.addEventListener('click',closeMM);
+mmc.addEventListener('click',closeMM);
+document.querySelectorAll('#mml a,#mmct').forEach(function(a){a.addEventListener('click',closeMM);});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMM();});
 
-  requestAnimationFrame(() => {
-    document.querySelectorAll('#hero .reveal').forEach(el => el.classList.add('visible'));
-    setTimeout(() => document.getElementById('hero').classList.add('loaded'), 100);
+// REVEAL
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+requestAnimationFrame(function(){
+  document.querySelectorAll('#hero .rv').forEach(function(el){el.classList.add('on');});
+  setTimeout(function(){document.getElementById('hero').classList.add('ld');},100);
+});
+
+// LIGHTBOX
+var lb=document.getElementById('lb'),lbk=document.getElementById('lbk'),lbcl=document.getElementById('lbcl'),olb=document.getElementById('olb'),lbsb=document.getElementById('lbsb'),lbfw=document.getElementById('lbfw'),lbok=document.getElementById('lbok');
+function openLB(){lb.classList.add('open');document.body.style.overflow='hidden';}
+function closeLB(){lb.classList.remove('open');document.body.style.overflow='';}
+olb.addEventListener('click',openLB);
+lbcl.addEventListener('click',closeLB);
+lbk.addEventListener('click',closeLB);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLB();});
+lbsb.addEventListener('click',function(){
+  var ok=true;
+  [{id:'fn',msg:'Please enter your name.'},{id:'fe',msg:'Please enter a valid email.',email:true},{id:'fs',msg:'Please choose a topic.'},{id:'fm',msg:'Please add a message.'}].forEach(function(f){
+    var el=document.getElementById(f.id),em=el.parentElement.querySelector('.lbem');
+    var bad=!el.value.trim()||(f.email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value));
+    el.classList.toggle('er',bad);if(em){em.textContent=f.msg;em.classList.toggle('show',bad);}if(bad)ok=false;
   });
-
-  // ── CONTACT LIGHTBOX ──
-  const lightbox   = document.getElementById('contact-lightbox');
-  const openBtn    = document.getElementById('open-contact');
-  const closeBtn   = document.getElementById('lb-close');
-  const backdrop   = document.getElementById('lb-backdrop');
-  const submitBtn  = document.getElementById('lb-submit');
-  const formWrap   = document.getElementById('lb-form-wrap');
-  const successEl  = document.getElementById('lb-success');
-
-  function openLightbox() {
-    lightbox.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    setTimeout(() => closeBtn.focus(), 50);
-  }
-  function closeLightbox() {
-    lightbox.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  openBtn.addEventListener('click', openLightbox);
-  closeBtn.addEventListener('click', closeLightbox);
-  backdrop.addEventListener('click', closeLightbox);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-
-  // Also wire up "Book a Consultation" in services band
-  document.querySelectorAll('a[href="#consult"]').forEach(a => {
-    // leave nav links as scroll; only intercept the services-band button if desired
-  });
-
-  function validate() {
-    let ok = true;
-    [
-      { el: document.getElementById('lf-name'),    msg: 'Please enter your name.' },
-      { el: document.getElementById('lf-email'),   msg: 'Please enter a valid email.', email: true },
-      { el: document.getElementById('lf-subject'), msg: 'Please choose a topic.' },
-      { el: document.getElementById('lf-message'), msg: 'Please add a short message.' },
-    ].forEach(({ el, msg, email }) => {
-      const errEl = el.parentElement.querySelector('.lb-error-msg');
-      const bad = !el.value.trim() || (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value));
-      el.classList.toggle('error', bad);
-      if (errEl) { errEl.textContent = msg; errEl.classList.toggle('show', bad); }
-      if (bad) ok = false;
-    });
-    return ok;
-  }
-
-  submitBtn.addEventListener('click', () => {
-    if (!validate()) return;
-    submitBtn.classList.add('loading');
-    submitBtn.textContent = 'Sending…';
-    // Simulate send — wire to your backend/Formspree/Netlify as needed
-    setTimeout(() => {
-      formWrap.style.display = 'none';
-      successEl.style.display = 'block';
-      submitBtn.classList.remove('loading');
-    }, 1400);
-  });
+  if(!ok)return;
+  lbsb.classList.add('ld');lbsb.textContent='Sending…';
+  setTimeout(function(){lbfw.style.display='none';lbok.style.display='flex';},1400);
+});
 </script>
 </body>
 </html>
