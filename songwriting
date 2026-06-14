@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Songwriting &amp; Arranging — Olivia Hyde · Sing Like No One Else</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+img{display:block;max-width:100%}
+a{text-decoration:none}
+body{background:#fff;color:#1C1C1C;font-family:'Inter',sans-serif;font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+:root{
+  --white:#ffffff;
+  --off:#F7F6F3;
+  --line:#E2E0DC;
+  --muted:#A09C97;
+  --ink:#1C1C1C;
+  --mid:#5A5550;
+  --sage:#5C6B5C;
+  --sage-light:#8A9E8A;
+  --dark:#111;
+  --nh:66px;
+}
+
+/* TYPE */
+.label{font-family:'Inter',sans-serif;font-size:.58rem;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.display{font-family:'Cormorant Garamond',serif;font-weight:300;line-height:1.05;color:var(--ink)}
+.display em{font-style:italic;color:var(--sage)}
+.prose{font-size:.95rem;color:var(--mid);line-height:1.9}
+.prose p+p{margin-top:1rem}
+.prose strong{color:var(--ink);font-weight:400}
+
+/* UTILS */
+.dash{display:block;width:2rem;height:1px;background:var(--sage);opacity:.5;margin:1.6rem 0 2.2rem}
+.pad{padding:clamp(5rem,9vw,8rem) clamp(1.5rem,5.5vw,5.5rem)}
+
+/* BUTTONS */
+.btn{display:inline-block;font-family:'Inter',sans-serif;font-size:.58rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;padding:.85rem 2rem;cursor:pointer;border:none;line-height:1;transition:all .18s;white-space:nowrap}
+.btn-solid{background:var(--ink);color:#fff}.btn-solid:hover{background:#333}
+.btn-outline{border:1px solid rgba(28,28,28,.22);color:var(--ink);background:transparent}.btn-outline:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn-outline-w{border:1px solid rgba(255,255,255,.35);color:#fff;background:transparent}.btn-outline-w:hover{background:#fff;color:var(--ink)}
+.btn-white{background:#fff;color:var(--ink)}.btn-white:hover{background:var(--off)}
+
+/* ── NAV ── */
+nav{position:fixed;inset:0 0 auto;z-index:500;height:var(--nh);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.5rem,5.5vw,5.5rem);transition:background .3s,border-color .25s,box-shadow .3s}
+nav.sc{background:rgba(255,255,255,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);box-shadow:0 1px 20px rgba(0,0,0,.05)}
+.nb{display:flex;flex-direction:column;gap:.08rem}
+.nb-name{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;letter-spacing:.02em;color:#fff;transition:color .3s;line-height:1.1}
+nav.sc .nb-name{color:var(--ink)}
+.nb-tag{font-size:.44rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.3);transition:color .3s}
+nav.sc .nb-tag{color:var(--muted)}
+.nl{list-style:none;display:flex;gap:2.8rem}
+.nl a{font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.55);transition:color .18s}
+nav.sc .nl a{color:var(--muted)}
+.nl a:hover{color:#fff}
+nav.sc .nl a:hover{color:var(--ink)}
+.ncta{font-size:.55rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:#fff;background:var(--sage);padding:.6rem 1.4rem;border:none;cursor:pointer;transition:background .18s;display:inline-block}
+.ncta:hover{background:#4A5A4A}
+
+/* ── HAMBURGER + DROPDOWN ── */
+#hbg{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;width:44px;height:44px;padding:11px;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;flex-shrink:0}
+#hbg span{display:block;width:22px;height:1.5px;background:#fff;transition:background .25s,transform .25s,opacity .25s;transform-origin:center}
+nav.sc #hbg span{background:var(--ink)}
+#hbg.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+#hbg.open span:nth-child(2){opacity:0}
+#hbg.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+#nav-drop{display:none;position:fixed;top:var(--nh);left:0;right:0;z-index:499;background:rgba(255,255,255,.98);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);box-shadow:0 8px 32px rgba(0,0,0,.1)}
+#nav-drop.open{display:block}
+#nav-drop ul{list-style:none;padding:.5rem 0}
+#nav-drop ul li a,#nav-drop ul li span{display:block;padding:.9rem clamp(1.5rem,5.5vw,5.5rem);font-size:.6rem;font-weight:400;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);transition:color .18s,background .18s}
+#nav-drop ul li a:hover{color:var(--ink);background:var(--off)}
+#nav-drop .drop-cta{display:block;margin:1rem clamp(1.5rem,5.5vw,5.5rem) 1.2rem;font-size:.58rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;text-align:center;color:#fff;background:var(--sage);padding:.9rem;transition:background .18s}
+#nav-drop .drop-cta:hover{background:#4A5A4A}
+
+/* ── PAGE HERO ── */
+#phero{position:relative;height:100svh;overflow:hidden;display:flex;align-items:flex-end}
+.ph-bg{position:absolute;inset:0}
+.ph-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;transform:scale(1.04);transition:transform 9s ease-out}
+#phero.ld .ph-bg img{transform:scale(1)}
+.ph-bg::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(0,0,0,.62) 0%,rgba(0,0,0,0) 22%),
+             linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.8) 22%,rgba(0,0,0,.35) 45%,rgba(0,0,0,0) 62%)}
+.ph-crumb{position:absolute;top:calc(var(--nh) + 1.4rem);left:clamp(1.5rem,5.5vw,5.5rem);z-index:2;display:flex;align-items:center;gap:.6rem}
+.ph-crumb a,.ph-crumb span{font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);transition:color .18s}
+.ph-crumb a:hover{color:rgba(255,255,255,.75)}
+.ph-crumb .sep{color:rgba(255,255,255,.18)}
+.ph-inner{position:relative;z-index:2;width:100%;padding:0 clamp(1.5rem,5.5vw,5.5rem) clamp(3rem,5vh,5rem)}
+.ph-row{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.ph-hed{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(3.4rem,8vw,9rem);line-height:.9;color:#fff;letter-spacing:-.015em}
+.ph-hed em{font-style:italic;color:rgba(255,255,255,.6)}
+.ph-right{display:flex;flex-direction:column;align-items:flex-end;gap:1.6rem;flex-shrink:0;padding-bottom:.5rem}
+.ph-strap{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.9rem,1.3vw,1.1rem);color:rgba(255,255,255,.65);line-height:1.6;text-align:right;max-width:280px}
+.ph-btns{display:flex;gap:.65rem;flex-wrap:wrap;justify-content:flex-end}
+.ph-meta{position:absolute;bottom:0;left:0;right:0;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:.8rem clamp(1.5rem,5.5vw,5.5rem);border-top:1px solid rgba(255,255,255,.1);pointer-events:none}
+.ph-meta span{font-size:.48rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.2)}
+
+/* ── INTRO ── */
+#intro{background:#fff}
+.intro-grid{display:grid;grid-template-columns:6fr 5fr;gap:clamp(3rem,7vw,8rem);align-items:start}
+.intro-grid .display{font-size:clamp(2.2rem,3.8vw,3.5rem)}
+/* Stats panel */
+.intro-stats{background:var(--off);padding:clamp(2rem,3.5vw,3rem);border-top:2px solid var(--sage)}
+.stat-item{padding-bottom:1.8rem;margin-bottom:1.8rem;border-bottom:1px solid var(--line)}
+.stat-item:last-child{padding-bottom:0;margin-bottom:0;border-bottom:none}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,4vw,3.8rem);font-weight:300;line-height:1;color:var(--ink);letter-spacing:-.02em}
+.stat-n em{font-style:italic;color:var(--sage)}
+.stat-rule{width:28px;height:1px;background:var(--line);margin:10px 0 8px}
+.stat-label{font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.stat-desc{font-size:.85rem;color:var(--mid);line-height:1.75;margin-top:.5rem}
+
+/* ── WHAT WE COVER ── */
+#what{background:var(--off)}
+.what-head{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,6rem);align-items:end;margin-bottom:clamp(2.5rem,4vw,4rem)}
+.what-head .display{font-size:clamp(2.2rem,3.8vw,3.5rem)}
+.areas{display:flex;flex-direction:column}
+.area{display:grid;grid-template-columns:2rem 1fr auto;gap:1.4rem;align-items:baseline;padding:1.8rem 0;border-bottom:1px solid var(--line)}
+.area:first-child{border-top:1px solid var(--line)}
+.area-n{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:300;color:var(--muted);line-height:1}
+.area-body h3{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,1.6vw,1.35rem);font-weight:400;color:var(--ink);line-height:1.2;margin-bottom:.4rem}
+.area-body p{font-size:.88rem;color:var(--mid);line-height:1.85}
+.area-tag{font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sage);opacity:.7;white-space:nowrap}
+
+/* ── FOR WHOM ── */
+#whom{background:#fff}
+.whom-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(3rem,7vw,8rem);align-items:center}
+.whom-img img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 15%}
+.whom-text .display{font-size:clamp(2.2rem,3.8vw,3.5rem)}
+.check-list{margin-top:2rem;display:flex;flex-direction:column}
+.check-item{display:flex;align-items:flex-start;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line)}
+.check-item:first-child{border-top:1px solid var(--line)}
+.check-dot{width:6px;height:6px;border-radius:50%;background:var(--sage);flex-shrink:0;margin-top:.55rem;opacity:.7}
+.check-item p{font-size:.9rem;color:var(--mid);line-height:1.7}
+.check-item strong{color:var(--ink);font-weight:400}
+
+/* ── APPROACH (dark) ── */
+#approach{background:var(--dark)}
+.approach-top{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,7rem);align-items:end;padding:clamp(4.5rem,8vw,7rem) clamp(1.5rem,5.5vw,5.5rem) clamp(2.5rem,4vw,4rem);border-bottom:1px solid rgba(255,255,255,.07)}
+#approach .label{color:rgba(255,255,255,.5)}
+#approach .display{color:#fff;font-size:clamp(2.2rem,3.8vw,3.5rem)}
+#approach .display em{color:#a8c4a8}
+#approach .dash{background:var(--sage-light);opacity:.6}
+.approach-top-r p{font-size:.9rem;color:rgba(255,255,255,.62);line-height:1.9}
+.principles{display:grid;grid-template-columns:repeat(3,1fr)}
+.principle{padding:clamp(2rem,3.5vw,3rem) clamp(1.5rem,5.5vw,5.5rem);border-bottom:1px solid rgba(255,255,255,.07);border-right:1px solid rgba(255,255,255,.07)}
+.principle:nth-child(3n){border-right:none}
+.principle:nth-last-child(-n+3){border-bottom:none}
+.p-num{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:rgba(255,255,255,.4);line-height:1;margin-bottom:1.2rem}
+.principle h3{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:#fff;margin-bottom:.6rem;line-height:1.2}
+.principle p{font-size:.85rem;color:rgba(255,255,255,.58);line-height:1.85}
+
+/* ── QUOTE ── */
+#pquote{position:relative;min-height:52vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pq-bg{position:absolute;inset:0;background-size:cover;background-position:50% 22%;filter:grayscale(60%) brightness(.15)}
+.pq-inner{position:relative;z-index:1;width:100%;max-width:860px;padding:clamp(4rem,8vw,7rem) clamp(2rem,6vw,5rem)}
+.pq-eyebrow{font-size:.5rem;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.55);display:block;margin-bottom:2.4rem}
+.pq-text{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(2.2rem,4.5vw,4.2rem);line-height:1.2;color:#fff;margin-bottom:2.8rem;letter-spacing:-.01em}
+.pq-text em{font-style:italic;color:rgba(138,158,138,.9)}
+.pq-bottom{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.1);padding-top:1.8rem}
+.pq-attr{display:flex;align-items:center;gap:1.2rem}
+.pq-attr-line{width:2rem;height:1px;background:rgba(255,255,255,.25);flex-shrink:0}
+.pq-attr-name{font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:400}
+
+/* ── CONTACT ── */
+#contact{background:var(--off)}
+.contact-wrap{display:grid;grid-template-columns:5fr 7fr;gap:clamp(3rem,7vw,8rem);align-items:start}
+.contact-intro .display{font-size:clamp(2.2rem,3.5vw,3.2rem)}
+.contact-intro .prose{margin-top:1.2rem}
+.contact-details{margin-top:2.4rem;display:flex;flex-direction:column;gap:.55rem}
+.cd-item{display:flex;align-items:center;gap:.75rem;font-size:.85rem;color:var(--mid);transition:color .18s}
+.cd-item:hover{color:var(--ink)}
+.cd-item svg{opacity:.4;flex-shrink:0}
+.cd-divider{height:1px;background:var(--line);margin:1.6rem 0}
+.form-wrap{background:#fff;padding:clamp(2rem,4vw,3rem)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.2rem}
+.form-field{display:flex;flex-direction:column;gap:.45rem;margin-bottom:1.2rem}
+.form-field:last-of-type{margin-bottom:0}
+.form-field label{font-family:'Inter',sans-serif;font-size:.55rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.form-field input,.form-field select,.form-field textarea{font-family:'Inter',sans-serif;font-size:.9rem;font-weight:300;color:var(--ink);background:#fff;border:1px solid var(--line);padding:.8rem 1rem;outline:none;width:100%;-webkit-appearance:none;border-radius:0;transition:border-color .18s}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--sage)}
+.form-field input.er,.form-field select.er,.form-field textarea.er{border-color:#C0604A}
+.form-field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23A09C97' stroke-width='1.2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.4rem;cursor:pointer}
+.form-field input::placeholder,.form-field textarea::placeholder{color:#C8C4BF}
+.form-field textarea{resize:vertical;min-height:130px;line-height:1.7}
+.form-err{font-size:.56rem;color:#C0604A;letter-spacing:.06em;display:none;margin-top:.15rem}
+.form-err.show{display:block}
+.form-foot{display:flex;align-items:center;gap:1.6rem;margin-top:1.6rem;flex-wrap:wrap}
+.form-submit{font-family:'Inter',sans-serif;font-size:.58rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;background:var(--ink);color:#fff;border:none;padding:.9rem 2.2rem;cursor:pointer;transition:background .18s;border-radius:0}
+.form-submit:hover{background:#333}
+.form-submit.ld{opacity:.5;pointer-events:none}
+.form-ok{display:none;flex-direction:column;align-items:flex-start;padding:2.5rem 0;gap:.8rem}
+.form-ok-tick{width:52px;height:52px;border:1px solid rgba(92,107,92,.4);display:flex;align-items:center;justify-content:center}
+.form-ok h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--ink)}
+.form-ok p{font-size:.9rem;color:var(--mid);line-height:1.8}
+
+/* ── OTHER SERVICES ── */
+#others{background:var(--off)}
+.others-head{margin-bottom:clamp(2rem,3.5vw,3rem)}
+.others-head .display{font-size:clamp(1.8rem,2.8vw,2.4rem)}
+.others-grid{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.other-item{padding:2rem 1.6rem 1.8rem;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:0;background:#fff;transition:background .2s;position:relative}
+.other-item::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--sage);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.other-item:hover{background:var(--off)}
+.other-item:hover::after{transform:scaleX(1)}
+.other-n{font-size:.46rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.9rem}
+.other-item h3{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;color:var(--ink);line-height:1.25;margin-bottom:.6rem}
+.other-item p{font-size:.82rem;color:var(--mid);line-height:1.75;flex:1;margin-bottom:1.4rem}
+.other-cta{font-family:'Inter',sans-serif;font-size:.52rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--sage);display:inline-flex;align-items:center;gap:.4rem;transition:gap .18s,color .18s;margin-top:auto}
+.other-cta::after{content:'→';font-size:.65rem;transition:transform .18s}
+.other-item:hover .other-cta{color:var(--ink);gap:.65rem}
+.other-item:hover .other-cta::after{transform:translateX(2px)}
+
+/* ── FOOTER ── */
+footer{background:var(--dark);padding:clamp(3.5rem,6vw,6rem) clamp(1.5rem,5.5vw,5.5rem) clamp(1.5rem,3vw,2.5rem)}
+.f-top{display:grid;grid-template-columns:2fr 1fr 1fr 1.4fr;gap:clamp(2rem,4vw,5rem);padding-bottom:clamp(2.5rem,4vw,4rem);border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:clamp(1.2rem,2vw,2rem)}
+.f-col-brand .f-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:#fff;display:block;margin-bottom:.4rem;line-height:1.1}
+.f-col-brand .f-sub{font-size:.46rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.22);display:block;margin-bottom:1.4rem}
+.f-col-brand p{font-size:.85rem;color:rgba(255,255,255,.28);line-height:1.85;max-width:260px}
+.f-col-title{font-size:.5rem;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.2);display:block;margin-bottom:1.1rem}
+.f-col ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.f-col ul a{font-size:.78rem;color:rgba(255,255,255,.3);transition:color .18s;display:block}
+.f-col ul a:hover{color:rgba(255,255,255,.75)}
+.f-col ul a.active{color:rgba(255,255,255,.55)}
+.f-col-contact ul{gap:.65rem}
+.f-col-contact a{display:flex;align-items:center;gap:.55rem;font-size:.78rem;color:rgba(255,255,255,.3);transition:color .18s}
+.f-col-contact a:hover{color:rgba(255,255,255,.75)}
+.f-col-contact svg{opacity:.45;flex-shrink:0}
+.f-cta-block{margin-top:1.6rem}
+.f-cta-block a{display:inline-block;font-family:'Inter',sans-serif;font-size:.56rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;padding:.75rem 1.5rem;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.5);transition:all .18s}
+.f-cta-block a:hover{border-color:rgba(255,255,255,.5);color:#fff}
+.f-base{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+.f-base span{font-size:.52rem;color:rgba(255,255,255,.14);letter-spacing:.07em}
+.f-base a{font-size:.52rem;color:rgba(255,255,255,.14);letter-spacing:.07em;transition:color .18s}
+.f-base a:hover{color:rgba(255,255,255,.4)}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .65s,transform .65s}
+.rv.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .nl,.ncta{display:none}
+  #hbg{display:flex}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nb">
+    <span class="nb-name">Sing Like No One Else</span>
+    <span class="nb-tag">Olivia Hyde · Artist Mentorship</span>
+  </a>
+  <ul class="nl">
+    <li><a href="index.html#manifesto">About</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#how">How It Works</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="ncta">Free Consultation</a>
+  <button id="hbg" aria-label="Open menu" aria-expanded="false" aria-controls="mm"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- NAV DROPDOWN -->
+<div id="nav-drop">
+  <ul>
+    <li><a href="index.html#manifesto">About</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#how">How It Works</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="drop-cta">Book a Free Consultation</a>
+</div>
+
+<!-- PAGE HERO -->
+<section id="phero">
+  <div class="ph-bg">
+    <img src="https://raw.githubusercontent.com/9s4pr6gvvk-bot/singlikenooneelse/refs/heads/main/62331531_2294124670855268_4219635674162135040_n.jpg" alt="Olivia Hyde performing">
+  </div>
+  <div class="ph-crumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="index.html#services">Services</a>
+    <span class="sep">›</span>
+    <span>Songwriting &amp; Arranging</span>
+  </div>
+  <div class="ph-meta" aria-hidden="true">
+    <span>01 — Technical · Embodied</span>
+    <span>Songwriting &amp; Arranging</span>
+  </div>
+  <div class="ph-inner">
+    <div class="ph-row">
+      <h1 class="ph-hed">
+        <span class="rv d1" style="display:block">Songwriting</span>
+        <span class="rv d2" style="display:block">&amp; <em>Arranging</em></span>
+      </h1>
+      <div class="ph-right rv d2">
+        <p class="ph-strap">Find your voice as a songwriter. Develop your songs from first idea to something you're proud to release.</p>
+        <div class="ph-btns">
+          <a href="#contact" class="btn btn-white">Book a Consultation</a>
+          <a href="#what" class="btn btn-outline-w">What We Cover</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section id="intro" class="pad">
+  <div class="intro-grid">
+    <div class="rv">
+      <span class="label">The Work</span>
+      <h2 class="display" style="font-size:clamp(2.2rem,3.8vw,3.5rem);margin:.7rem 0 0">Songs don't write<br>themselves — but <em>they can.</em></h2>
+      <span class="dash"></span>
+      <div class="prose">
+        <p>Songwriting is one of the most personal things you can do — and one of the most technically demanding. It asks you to hold something emotionally true in one hand and structurally sound in the other, and to not drop either one.</p>
+        <p>We work on the craft of it: how songs are built, how ideas develop, how to know when something is finished and when it needs more work. We also work on the psychological side — the self-doubt, the blank page, the songs that never make it past a voice memo because you don't trust them enough to develop them.</p>
+        <p>Arranging and production are part of this too. <strong>How a song sounds shapes what it says.</strong> We look at how your arrangements serve your songs, and how to make production decisions that feel authentic rather than generic.</p>
+      </div>
+      <div style="margin-top:2.2rem"><a href="#contact" class="btn btn-solid">Book a Free Consultation</a></div>
+    </div>
+    <div class="intro-stats rv d1">
+      <div class="stat-item">
+        <div class="stat-n">10<em>+</em></div>
+        <div class="stat-rule"></div>
+        <div class="stat-label">Years writing original music</div>
+        <p class="stat-desc">Writing and releasing original material across metal, indie and folk — across a decade of active songwriting.</p>
+      </div>
+      <div class="stat-item">
+        <div class="stat-n"><em>All</em></div>
+        <div class="stat-rule"></div>
+        <div class="stat-label">Styles and genres</div>
+        <p class="stat-desc">Whether you write acoustic folk or heavy music, the craft principles are the same. We start where you are.</p>
+      </div>
+      <div class="stat-item">
+        <div class="stat-n">1<em>:1</em></div>
+        <div class="stat-rule"></div>
+        <div class="stat-label">Always around your songs</div>
+        <p class="stat-desc">No templates, no formulas. Everything built around your music, your voice and where you want to go.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE COVER -->
+<section id="what" class="pad">
+  <div class="what-head rv">
+    <div>
+      <span class="label">The Curriculum</span>
+      <h2 class="display" style="font-size:clamp(2.2rem,3.8vw,3.5rem);margin:.7rem 0 0">What we <em>work on</em></h2>
+      <span class="dash"></span>
+    </div>
+    <p class="prose rv d1">Every session is different. These are the areas we draw from — in whatever combination serves you best right now.</p>
+  </div>
+  <div class="areas">
+    <div class="area rv">
+      <span class="area-n">01</span>
+      <div class="area-body">
+        <h3>Song Structure &amp; Architecture</h3>
+        <p>How songs are built — verse, chorus, bridge, pre-chorus and everything in between. When structure serves the song and when it gets in the way.</p>
+      </div>
+      <span class="area-tag">Craft</span>
+    </div>
+    <div class="area rv">
+      <span class="area-n">02</span>
+      <div class="area-body">
+        <h3>Lyric Writing</h3>
+        <p>Finding the right words — and the right level of specificity. Writing lyrics that are honest and personal without becoming indulgent or opaque.</p>
+      </div>
+      <span class="area-tag">Language</span>
+    </div>
+    <div class="area rv">
+      <span class="area-n">03</span>
+      <div class="area-body">
+        <h3>Melody &amp; Hook Development</h3>
+        <p>How to develop memorable, distinctive melodic ideas that feel like yours — not generic, not derivative, but unmistakably you.</p>
+      </div>
+      <span class="area-tag">Musical</span>
+    </div>
+    <div class="area rv">
+      <span class="area-n">04</span>
+      <div class="area-body">
+        <h3>Arrangement &amp; Instrumentation</h3>
+        <p>How to arrange your songs so that every element earns its place. Stripping back, building up, and knowing the difference.</p>
+      </div>
+      <span class="area-tag">Arrangement</span>
+    </div>
+    <div class="area rv">
+      <span class="area-n">05</span>
+      <div class="area-body">
+        <h3>Production Decisions</h3>
+        <p>Production shapes meaning. We look at how to make production choices that serve your songs rather than burying them under trend or convention.</p>
+      </div>
+      <span class="area-tag">Production</span>
+    </div>
+    <div class="area rv">
+      <span class="area-n">06</span>
+      <div class="area-body">
+        <h3>Developing &amp; Finishing Songs</h3>
+        <p>Getting ideas out of voice memos and into the world. Working through creative blocks, knowing when a song is done, and building a consistent output.</p>
+      </div>
+      <span class="area-tag">Process</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOR WHOM -->
+<section id="whom" class="pad">
+  <div class="whom-grid">
+    <div class="whom-img rv">
+      <img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/35694868_255164948566121_6544878797248790528_n.jpg?raw=true" alt="Olivia Hyde">
+    </div>
+    <div class="rv d1">
+      <span class="label">Is This For You?</span>
+      <h2 class="display" style="font-size:clamp(2.2rem,3.8vw,3.5rem);margin:.7rem 0 0">This work suits <em>artists who…</em></h2>
+      <span class="dash"></span>
+      <div class="check-list">
+        <div class="check-item"><div class="check-dot"></div><p>Have ideas but struggle to <strong>develop them into finished songs.</strong></p></div>
+        <div class="check-item"><div class="check-dot"></div><p>Feel their songs are <strong>structurally weak</strong> or that something is off but can't identify what.</p></div>
+        <div class="check-item"><div class="check-dot"></div><p>Write prolifically but <strong>never finish anything</strong> — or finish things but feel dissatisfied with the result.</p></div>
+        <div class="check-item"><div class="check-dot"></div><p>Want to <strong>expand beyond their current sounds</strong> — in arrangement, production or genre.</p></div>
+        <div class="check-item"><div class="check-dot"></div><p>Are preparing material for <strong>recording or release</strong> and want to go in with stronger songs.</p></div>
+        <div class="check-item"><div class="check-dot"></div><p>Want to build a <strong>consistent, sustainable creative practice</strong> rather than waiting for inspiration to strike.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<div id="approach">
+  <div class="approach-top">
+    <div class="rv">
+      <span class="label">The Approach</span>
+      <h2 class="display" style="font-size:clamp(2.2rem,3.8vw,3.5rem);margin:.7rem 0 0">How I <em>work with you</em></h2>
+      <span class="dash"></span>
+    </div>
+    <div class="approach-top-r rv d1">
+      <p>Over a decade of writing, recording and releasing original music — everything I know about songwriting I learned by doing it, getting it wrong, and doing it again. That is what I bring to this work.</p>
+    </div>
+  </div>
+  <div class="principles">
+    <div class="principle rv">
+      <div class="p-num">01</div>
+      <h3>The song comes first</h3>
+      <p>Production, arrangement, genre — all of it serves the song. We never lose sight of what the song is trying to say.</p>
+    </div>
+    <div class="principle rv d1">
+      <div class="p-num">02</div>
+      <h3>Honest feedback</h3>
+      <p>I'll tell you what's working and what isn't. Not harshly, but clearly. You deserve to know where you actually are.</p>
+    </div>
+    <div class="principle rv d2">
+      <div class="p-num">03</div>
+      <h3>Your voice, not mine</h3>
+      <p>The goal is never to make your songs sound like my songs. It's to help you find out what yours want to be.</p>
+    </div>
+    <div class="principle rv">
+      <div class="p-num">04</div>
+      <h3>Process over inspiration</h3>
+      <p>Inspiration is unreliable. We build a practice — habits and methods that produce work whether you feel inspired or not.</p>
+    </div>
+    <div class="principle rv d1">
+      <div class="p-num">05</div>
+      <h3>Finish things</h3>
+      <p>An unfinished song teaches you nothing. We work on getting ideas across the line — even when they feel imperfect.</p>
+    </div>
+    <div class="principle rv d2">
+      <div class="p-num">06</div>
+      <h3>Real-world experience</h3>
+      <p>Everything I offer comes from having written, recorded and released original music for over a decade — not from theory.</p>
+    </div>
+  </div>
+</div>
+
+<!-- QUOTE -->
+<div id="pquote">
+  <div class="pq-bg" style="background-image:url('https://raw.githubusercontent.com/9s4pr6gvvk-bot/singlikenooneelse/refs/heads/main/62331531_2294124670855268_4219635674162135040_n.jpg');"></div>
+  <div class="pq-inner rv">
+    <span class="pq-eyebrow">Olivia Hyde · Songwriting &amp; Arranging</span>
+    <p class="pq-text">"The best songs are the ones that could only have been written by you. That's what we're working towards."</p>
+    <div class="pq-bottom">
+      <div class="pq-attr">
+        <span class="pq-attr-line"></span>
+        <span class="pq-attr-name">Artist Mentorship · UK</span>
+      </div>
+      <a href="#contact" class="btn btn-white">Book a Free Consultation</a>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact" class="pad">
+  <div class="contact-wrap">
+    <div class="rv">
+      <span class="label">Free Consultation</span>
+      <h2 class="display" style="font-size:clamp(2rem,3.5vw,3.2rem);margin:.7rem 0 0">Ready to start<br><em>developing your songs?</em></h2>
+      <span class="dash"></span>
+      <div class="prose">
+        <p>Get in touch and we'll have a free conversation about where you are with your writing, what you want to develop, and whether this is the right fit.</p>
+      </div>
+      <div class="cd-divider"></div>
+      <div class="contact-details">
+        <a href="mailto:olivia@singlikenooneelse.co.uk" class="cd-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="4" width="20" height="16" rx="1.5"/><path d="m2 7 10 7 10-7"/></svg>
+          olivia@singlikenooneelse.co.uk
+        </a>
+        <a href="tel:+447960887546" class="cd-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16v.92z"/></svg>
+          07960 887546
+        </a>
+        <a href="https://wa.me/447960887546" class="cd-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="opacity:.35"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+    <div class="rv d1">
+      <div class="form-wrap" id="the-form">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="f-name">Full name</label>
+            <input type="text" id="f-name" placeholder="e.g. Alex Smith" autocomplete="name">
+            <span class="form-err" id="e-name">Please enter your name.</span>
+          </div>
+          <div class="form-field">
+            <label for="f-email">Email address</label>
+            <input type="email" id="f-email" placeholder="you@example.com" autocomplete="email">
+            <span class="form-err" id="e-email">Please enter a valid email address.</span>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="f-topic">What are you working on?</label>
+          <select id="f-topic">
+            <option value="" disabled selected>Select a focus…</option>
+            <option>Song structure &amp; development</option>
+            <option>Lyric writing</option>
+            <option>Melody &amp; hooks</option>
+            <option>Arrangement &amp; production</option>
+            <option>Finishing songs</option>
+            <option>General songwriting</option>
+          </select>
+          <span class="form-err" id="e-topic">Please select a focus area.</span>
+        </div>
+        <div class="form-field">
+          <label for="f-msg">Tell me where you are right now</label>
+          <textarea id="f-msg" placeholder="What are you working on? What's stopping you finishing songs?"></textarea>
+          <span class="form-err" id="e-msg">Please add a message.</span>
+        </div>
+        <div class="form-foot">
+          <button class="form-submit" id="f-submit">Send Message</button>
+        </div>
+      </div>
+      <div class="form-ok" id="form-ok">
+        <div class="form-ok-tick">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="1.3"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <h3 class="display" style="font-size:1.8rem">Message sent.</h3>
+        <p>Thank you — Olivia will be in touch soon.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OTHER SERVICES -->
+<section id="others" class="pad" style="padding-top:clamp(3rem,5vw,4rem);padding-bottom:clamp(3rem,5vw,4rem)">
+  <div class="others-head rv">
+    <span class="label">Also Available</span>
+    <h2 class="display" style="font-size:clamp(1.8rem,2.8vw,2.4rem);margin:.5rem 0 0">Other <em>services</em></h2>
+  </div>
+  <div class="others-grid rv d1">
+    <div class="other-item">
+      <span class="other-n">01</span>
+      <h3>Voice &amp; Performance</h3>
+      <p>Technique, stage presence and the craft of performing original material with conviction.</p>
+      <a href="voice-and-performance.html" class="other-cta">Learn more</a>
+    </div>
+    <div class="other-item">
+      <span class="other-n">03</span>
+      <h3>Music Video Direction</h3>
+      <p>Concept, production and visual direction. Original videos on any budget.</p>
+      <a href="index.html#contact" class="other-cta">Enquire</a>
+    </div>
+    <div class="other-item">
+      <span class="other-n">04</span>
+      <h3>Branding &amp; Marketing</h3>
+      <p>Authentic branding and social media strategy that sounds like you.</p>
+      <a href="index.html#contact" class="other-cta">Enquire</a>
+    </div>
+    <div class="other-item">
+      <span class="other-n">05</span>
+      <h3>Confidence &amp; Resilience</h3>
+      <p>Mental health support specific to original artists navigating a difficult industry.</p>
+      <a href="index.html#contact" class="other-cta">Enquire</a>
+    </div>
+    <div class="other-item">
+      <span class="other-n">06</span>
+      <h3>Creative Direction</h3>
+      <p>Find your artistic identity and develop a visual and musical language that's yours.</p>
+      <a href="index.html#contact" class="other-cta">Enquire</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-top">
+    <div class="f-col f-col-brand">
+      <span class="f-name">Sing Like No One Else</span>
+      <span class="f-sub">Olivia Hyde · Artist Mentorship</span>
+      <p>Technical development, creative direction and honest mentorship for original artists with something real to say.</p>
+      <div class="f-cta-block"><a href="#contact">Book a Free Consultation</a></div>
+    </div>
+    <div class="f-col">
+      <span class="f-col-title">Navigate</span>
+      <ul>
+        <li><a href="index.html#manifesto">About</a></li>
+        <li><a href="index.html#about">The Mentorship</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#how">How It Works</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <span class="f-col-title">Services</span>
+      <ul>
+        <li><a href="voice-and-performance.html">Voice &amp; Performance</a></li>
+        <li><a href="songwriting-and-arranging.html" class="active">Songwriting &amp; Arranging</a></li>
+        <li><a href="index.html#services">Music Video Direction</a></li>
+        <li><a href="index.html#services">Branding &amp; Marketing</a></li>
+        <li><a href="index.html#services">Confidence &amp; Resilience</a></li>
+        <li><a href="index.html#services">Creative Direction</a></li>
+      </ul>
+    </div>
+    <div class="f-col f-col-contact">
+      <span class="f-col-title">Get In Touch</span>
+      <ul>
+        <li><a href="mailto:olivia@singlikenooneelse.co.uk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="4" width="20" height="16" rx="1.5"/><path d="m2 7 10 7 10-7"/></svg>olivia@singlikenooneelse.co.uk</a></li>
+        <li><a href="tel:+447960887546"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16v.92z"/></svg>07960 887546</a></li>
+        <li><a href="https://wa.me/447960887546"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="opacity:.45"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</a></li>
+        <li><a href="https://singlikenooneelse.co.uk" style="padding-left:1.7rem">singlikenooneelse.co.uk</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="f-base">
+    <span>© 2026 Olivia Hyde · Sing Like No One Else. All rights reserved.</span>
+    <a href="mailto:olivia@singlikenooneelse.co.uk">olivia@singlikenooneelse.co.uk</a>
+  </div>
+</footer>
+
+<script>
+// NAV
+var nav=document.getElementById('nav');
+window.addEventListener('scroll',function(){nav.classList.toggle('sc',window.scrollY>8);},{passive:true});
+
+// DROPDOWN MENU
+var hbg=document.getElementById('hbg');
+var drop=document.getElementById('nav-drop');
+function toggleDrop(){
+  var isOpen=drop.classList.toggle('open');
+  hbg.classList.toggle('open',isOpen);
+  hbg.setAttribute('aria-expanded',isOpen?'true':'false');
+}
+function closeDrop(){
+  drop.classList.remove('open');
+  hbg.classList.remove('open');
+  hbg.setAttribute('aria-expanded','false');
+}
+hbg.addEventListener('click',function(e){e.stopPropagation();toggleDrop();});
+document.addEventListener('click',function(e){
+  if(!drop.contains(e.target)&&e.target!==hbg)closeDrop();
+});
+document.querySelectorAll('#nav-drop a').forEach(function(a){a.addEventListener('click',closeDrop);});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDrop();});
+
+
+
+
+
+// REVEAL
+var obs=new IntersectionObserver(function(es){
+  es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target);}});
+},{threshold:0.08,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('.rv').forEach(function(el){obs.observe(el);});
+requestAnimationFrame(function(){
+  document.querySelectorAll('#phero .rv').forEach(function(el){el.classList.add('on');});
+  setTimeout(function(){document.getElementById('phero').classList.add('ld');},60);
+});
+
+// FORM
+document.getElementById('f-submit').addEventListener('click',function(){
+  var ok=true;
+  function check(id,errId,test){
+    var el=document.getElementById(id),bad=test(el.value);
+    el.classList.toggle('er',bad);
+    document.getElementById(errId).classList.toggle('show',bad);
+    if(bad)ok=false;
+  }
+  check('f-name','e-name',function(v){return!v.trim();});
+  check('f-email','e-email',function(v){return!v.trim()||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);});
+  check('f-topic','e-topic',function(v){return!v;});
+  check('f-msg','e-msg',function(v){return!v.trim();});
+  if(!ok)return;
+  var btn=this;btn.classList.add('ld');btn.textContent='Sending…';
+  setTimeout(function(){
+    document.getElementById('the-form').style.display='none';
+    document.getElementById('form-ok').style.display='flex';
+  },1400);
+});
+</script>
+</body>
+</html>
