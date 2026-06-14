@@ -180,11 +180,19 @@ nav.sc #hbg span{background:var(--ink)}
 .how-img img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 15%;position:sticky;top:calc(var(--nh) + 2rem)}
 
 /* ── QUOTE ── */
-#quote{position:relative;min-height:55vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.q-bg{position:absolute;inset:0;background-size:cover;background-position:50% 18%;filter:grayscale(55%) brightness(.18)}
-.q-inner{position:relative;z-index:1;text-align:center;padding:clamp(3rem,8vw,7rem) clamp(1.5rem,12vw,14rem);max-width:920px}
-.q-inner blockquote{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(1.9rem,4.2vw,3.5rem);color:#fff;line-height:1.28;margin-bottom:2.6rem;opacity:.88}
-.q-inner blockquote em{color:rgba(138,158,138,.95);font-style:italic}
+#quote{position:relative;min-height:52vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.q-bg{position:absolute;inset:0;background-size:cover;background-position:50% 22%;filter:grayscale(60%) brightness(.15)}
+.q-inner{position:relative;z-index:1;width:100%;max-width:860px;padding:clamp(4rem,8vw,7rem) clamp(2rem,6vw,5rem)}
+.q-eyebrow{font-size:.5rem;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.3);display:block;margin-bottom:2.4rem}
+.q-text{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(2.2rem,4.5vw,4.2rem);line-height:1.2;color:#fff;margin-bottom:2.8rem;letter-spacing:-.01em}
+.q-text em{font-style:italic;color:rgba(138,158,138,.9)}
+.q-bottom{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.1);padding-top:1.8rem}
+.q-attr{display:flex;align-items:center;gap:1.2rem}
+.q-attr-line{width:2rem;height:1px;background:rgba(255,255,255,.25);flex-shrink:0}
+.q-attr-name{font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:400}
+@media(max-width:600px){
+  .q-bottom{flex-direction:column;align-items:flex-start;gap:1.4rem}
+}
 
 /* ── CONTACT ── */
 #contact{background:var(--off)}
@@ -440,7 +448,7 @@ footer{background:var(--dark);padding:clamp(3.5rem,6vw,6rem) clamp(1.5rem,5.5vw,
       <span class="srv-num">01 — Technical</span>
       <h3>Voice &amp; Performance</h3>
       <p>Singing technique, performance craft, stage presence, and the physical and emotional work of performing original material to real audiences.</p>
-      <a href="#contact" class="srv-link">Get in touch</a>
+      <a href="voice-and-performance.html" class="srv-link">Learn more</a>
     </div>
     <div class="srv-cell rv d1">
       <span class="srv-num">02 — Creative</span>
@@ -523,8 +531,15 @@ footer{background:var(--dark);padding:clamp(3.5rem,6vw,6rem) clamp(1.5rem,5.5vw,
 <div id="quote">
   <div class="q-bg" style="background-image:url('https://raw.githubusercontent.com/9s4pr6gvvk-bot/singlikenooneelse/refs/heads/main/62331531_2294124670855268_4219635674162135040_n.jpg');"></div>
   <div class="q-inner rv">
-    <blockquote>"Become stronger, clearer and more resilient<br>as an artist — and as a <em>person.</em>"</blockquote>
-    <a href="#contact" class="btn btn-white">Book Your Free Consultation</a>
+    <span class="q-eyebrow">Olivia Hyde · Sing Like No One Else</span>
+    <p class="q-text">"Become stronger, clearer and more resilient as an artist — and as a <em>person.</em>"</p>
+    <div class="q-bottom">
+      <div class="q-attr">
+        <span class="q-attr-line"></span>
+        <span class="q-attr-name">Artist Mentorship · UK</span>
+      </div>
+      <a href="#contact" class="btn btn-white">Book a Free Consultation</a>
+    </div>
   </div>
 </div>
 
