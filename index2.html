@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sing Like No One Else — Olivia Hyde</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+img{display:block;max-width:100%}
+a{text-decoration:none}
+body{background:#fff;color:#1C1C1C;font-family:'Inter',sans-serif;font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+:root{
+  --white:#ffffff;
+  --off:#F7F6F3;
+  --line:#E2E0DC;
+  --muted:#A09C97;
+  --ink:#1C1C1C;
+  --mid:#5A5550;
+  --sage:#5C6B5C;
+  --sage-light:#8A9E8A;
+  --dark:#111;
+  --nh:66px;
+}
+
+/* TYPE */
+.label{font-family:'Inter',sans-serif;font-size:.58rem;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.display{font-family:'Cormorant Garamond',serif;font-weight:300;line-height:1.05;color:var(--ink)}
+.display em{font-style:italic;color:var(--sage)}
+.prose{font-size:.95rem;color:var(--mid);line-height:1.9}
+.prose p+p{margin-top:1rem}
+.prose strong{color:var(--ink);font-weight:400}
+
+/* UTILS */
+.dash{display:block;width:2rem;height:1px;background:var(--sage);opacity:.5;margin:1.6rem 0 2.2rem}
+.pad{padding:clamp(5rem,9vw,8rem) clamp(1.5rem,5.5vw,5.5rem)}
+
+/* BUTTONS */
+.btn{display:inline-block;font-family:'Inter',sans-serif;font-size:.58rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;padding:.85rem 2rem;cursor:pointer;border:none;line-height:1;transition:all .18s;white-space:nowrap}
+.btn-solid{background:var(--ink);color:#fff}.btn-solid:hover{background:#333}
+.btn-outline{border:1px solid rgba(28,28,28,.22);color:var(--ink);background:transparent}.btn-outline:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn-outline-w{border:1px solid rgba(255,255,255,.35);color:#fff;background:transparent}.btn-outline-w:hover{background:#fff;color:var(--ink)}
+.btn-white{background:#fff;color:var(--ink)}.btn-white:hover{background:var(--off)}
+
+/* ── NAV ── */
+nav{position:fixed;inset:0 0 auto;z-index:500;height:var(--nh);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.5rem,5.5vw,5.5rem);transition:background .3s,border-color .25s,box-shadow .3s}
+nav.sc{background:rgba(255,255,255,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);box-shadow:0 1px 20px rgba(0,0,0,.05)}
+.nb{display:flex;flex-direction:column;gap:.08rem}
+.nb-name{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;letter-spacing:.02em;color:#fff;transition:color .3s;line-height:1.1}
+nav.sc .nb-name{color:var(--ink)}
+.nb-tag{font-size:.44rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.3);transition:color .3s}
+nav.sc .nb-tag{color:var(--muted)}
+.nl{list-style:none;display:flex;gap:2.8rem}
+.nl a{font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.55);transition:color .18s}
+nav.sc .nl a{color:var(--muted)}
+.nl a:hover{color:#fff}
+nav.sc .nl a:hover{color:var(--ink)}
+.ncta{font-size:.55rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:#fff;background:var(--sage);padding:.6rem 1.4rem;border:none;cursor:pointer;transition:background .18s}
+.ncta:hover{background:#4A5A4A}
+
+/* hamburger */
+#hbg{display:none;flex-direction:column;gap:5.5px;background:none;border:none;cursor:pointer;width:44px;height:44px;padding:11px;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
+#hbg span{display:block;width:22px;height:1px;background:#fff;transition:background .25s,transform .25s,opacity .25s;transform-origin:center}
+nav.sc #hbg span{background:var(--ink)}
+#hbg.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+#hbg.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+#hbg.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* mobile drawer */
+#mm{position:fixed;inset:0;z-index:600;display:flex;visibility:hidden;pointer-events:none}
+#mm.open{visibility:visible;pointer-events:all}
+#mmb{flex:1;background:rgba(0,0,0,0);cursor:pointer;transition:background .3s}
+#mm.open #mmb{background:rgba(0,0,0,.45)}
+#mmp{width:290px;max-width:86vw;background:#fff;display:flex;flex-direction:column;flex-shrink:0;transform:translateX(100%);transition:transform .32s cubic-bezier(.22,1,.36,1)}
+#mm.open #mmp{transform:translateX(0)}
+#mmh{height:var(--nh);display:flex;align-items:center;justify-content:space-between;padding:0 1.6rem;border-bottom:1px solid var(--line)}
+#mmhb{font-family:'Cormorant Garamond',serif;font-size:.88rem;color:var(--muted);letter-spacing:.02em}
+#mmc{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.6rem;line-height:1;width:44px;height:44px;display:flex;align-items:center;justify-content:center;transition:color .18s}
+#mmc:hover{color:var(--ink)}
+#mml{flex:1;display:flex;flex-direction:column;justify-content:center;padding:1rem 2rem}
+#mml a{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:rgba(28,28,28,.4);display:block;padding:.75rem 0;border-bottom:1px solid var(--line);transition:color .18s,padding-left .18s}
+#mml a:first-child{border-top:1px solid var(--line)}
+#mml a:hover{color:var(--ink);padding-left:.4rem}
+#mmf{padding:1.4rem 2rem 2.6rem;border-top:1px solid var(--line)}
+#mmct{display:block;font-size:.56rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;text-align:center;color:#fff;background:var(--sage);padding:.9rem;margin-bottom:1rem;transition:background .18s}
+#mmct:hover{background:#4A5A4A}
+.mm-c{display:flex;flex-direction:column;gap:.4rem;text-align:center}
+.mm-c a{font-size:.6rem;letter-spacing:.04em;color:var(--muted);transition:color .18s}
+.mm-c a:hover{color:var(--ink)}
+
+/* ── HERO ── */
+#hero{position:relative;height:100svh;overflow:hidden;display:flex;align-items:flex-end}
+.h-bg{position:absolute;inset:0}
+.h-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;transform:scale(1.04);transition:transform 9s ease-out}
+#hero.ld .h-bg img{transform:scale(1)}
+.h-bg::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,.62) 0%,rgba(0,0,0,0) 22%),linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.8) 22%,rgba(0,0,0,.35) 45%,rgba(0,0,0,0) 62%)}
+.h-inner{position:relative;z-index:2;width:100%;padding:0 clamp(1.5rem,5.5vw,5.5rem) clamp(3rem,5vh,5rem)}
+.h-row{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.h-hed{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(3.8rem,9vw,10rem);line-height:.9;color:#fff;letter-spacing:-.015em}
+.h-hed em{font-style:italic;color:rgba(255,255,255,.6)}
+.h-i2{padding-left:clamp(1.5rem,5vw,5.5rem);display:block}
+.h-i3{padding-left:clamp(3rem,10vw,11rem);display:block}
+.h-right{display:flex;flex-direction:column;align-items:flex-end;gap:1.6rem;flex-shrink:0;padding-bottom:.5rem}
+.h-strap{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.95rem,1.35vw,1.15rem);color:rgba(255,255,255,.65);line-height:1.6;text-align:right;max-width:280px}
+.h-btns{display:flex;gap:.65rem;flex-wrap:wrap;justify-content:flex-end}
+/* meta bar */
+.h-meta{position:absolute;bottom:0;left:0;right:0;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:.8rem clamp(1.5rem,5.5vw,5.5rem);border-top:1px solid rgba(255,255,255,.1);pointer-events:none}
+.h-meta span{font-size:.48rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.2)}
+
+/* ── TICKER ── */
+.ticker{background:var(--off);height:42px;overflow:hidden;display:flex;align-items:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.ticker-t{display:flex;white-space:nowrap;animation:tk 48s linear infinite}
+.ticker-t span{font-size:.52rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);padding:0 2rem}
+.ticker-t .sep{color:var(--line);letter-spacing:0;padding:0}
+@keyframes tk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── MANIFESTO ── */
+#manifesto{background:#fff}
+.mfst{display:grid;grid-template-columns:5fr 6fr;gap:clamp(3rem,7vw,8rem);align-items:center}
+/* Two-image editorial composition */
+.mfst-photos{position:relative;padding-bottom:clamp(4rem,8vw,7rem)}
+.mfst-photos .ph-main{width:85%;aspect-ratio:3/4;object-fit:cover;object-position:50% 12%;display:block}
+.mfst-photos .ph-inset{position:absolute;bottom:0;right:0;width:52%;aspect-ratio:1/1;object-fit:cover;object-position:50% 30%;outline:4px solid #fff}
+.mfst-text .display{font-size:clamp(2.2rem,3.8vw,3.5rem)}
+.pull-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.1rem,1.6vw,1.25rem);color:var(--sage);line-height:1.6;padding:1.4rem 0 1.4rem 1.2rem;border-left:1.5px solid var(--sage);opacity:.85;margin:1.8rem 0}
+
+/* ── ABOUT ── */
+#about{background:var(--off)}
+.about{display:grid;grid-template-columns:6fr 5fr;gap:clamp(3rem,7vw,8rem);align-items:start}
+.about-text .display{font-size:clamp(2.2rem,3.8vw,3.5rem)}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:2rem}
+.tag{font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);border:1px solid var(--line);padding:.28rem .75rem}
+.a-photos{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.a-photos img:first-child{grid-column:1/-1;width:100%;height:clamp(200px,26vw,320px);object-fit:cover;object-position:50% 25%}
+.a-photos img:not(:first-child){width:100%;height:clamp(130px,16vw,210px);object-fit:cover;object-position:50% 20%}
+
+/* ── SERVICES ── */
+#services{background:var(--dark)}
+.srv-head{padding:clamp(4.5rem,8vw,7.5rem) clamp(1.5rem,5.5vw,5.5rem) clamp(2.5rem,4vw,4rem);display:grid;grid-template-columns:5fr 6fr;gap:clamp(2rem,5vw,7rem);align-items:end;border-bottom:1px solid rgba(255,255,255,.07)}
+#services .label{color:rgba(255,255,255,.25)}
+#services .display{color:#fff}
+#services .display em{color:var(--sage-light)}
+#services .dash{background:var(--sage-light);opacity:.3}
+.srv-head-l .display{font-size:clamp(2.2rem,3.8vw,3.5rem)}
+.srv-head-r p{font-size:.9rem;color:rgba(255,255,255,.38);line-height:1.9}
+.srv-head-r .note{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.88rem;color:rgba(255,255,255,.2);margin-top:1.2rem;padding-left:1rem;border-left:1px solid rgba(255,255,255,.1);line-height:1.7}
+
+/* Two-column service grid — text only */
+.srv-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(255,255,255,.07)}
+.srv-cell{padding:2.6rem clamp(1.5rem,5.5vw,5.5rem);border-bottom:1px solid rgba(255,255,255,.07);position:relative;display:flex;flex-direction:column}
+.srv-cell:nth-child(odd){border-right:1px solid rgba(255,255,255,.07)}
+.srv-cell::before{content:'';position:absolute;top:0;left:0;width:0;height:1.5px;background:var(--sage-light);opacity:.5;transition:width .4s ease}
+.srv-cell:hover::before{width:100%}
+.srv-num{font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.18);display:block;margin-bottom:.8rem}
+.srv-cell h3{font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,1.7vw,1.5rem);font-weight:400;color:#fff;margin-bottom:.65rem;line-height:1.2}
+.srv-cell p{font-size:.85rem;color:rgba(255,255,255,.35);line-height:1.9;margin-bottom:1.4rem}
+.srv-link{font-family:'Inter',sans-serif;font-size:.56rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3);display:inline-flex;align-items:center;gap:.5rem;transition:color .18s;margin-top:auto}
+.srv-link::after{content:'→';font-size:.7rem;transition:transform .18s}
+.srv-cell:hover .srv-link{color:var(--sage-light)}
+.srv-cell:hover .srv-link::after{transform:translateX(3px)}
+.srv-foot{padding:2.4rem clamp(1.5rem,5.5vw,5.5rem);border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;gap:2.5rem;flex-wrap:wrap}
+.srv-foot-q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.95rem,1.4vw,1.15rem);color:rgba(255,255,255,.28);line-height:1.7;max-width:560px}
+.srv-foot-q small{display:block;margin-top:.35rem;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.12);font-style:normal}
+
+/* ── HOW ── */
+#how{background:#fff}
+.how{display:grid;grid-template-columns:1fr 1fr;gap:clamp(3rem,7vw,9rem);align-items:start}
+.how-text .display{font-size:clamp(2.2rem,3.8vw,3.5rem)}
+.tl{margin-top:2.8rem;border-left:1px solid var(--line);padding-left:2rem}
+.tl-item{padding-bottom:2.6rem;position:relative}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{position:absolute;left:-2.33rem;top:.5rem;width:10px;height:10px;border:1.5px solid var(--sage);background:#fff;border-radius:50%}
+.tl-step{font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;color:var(--sage);display:block;margin-bottom:.4rem;opacity:.8}
+.tl-item h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--ink);margin-bottom:.5rem;line-height:1.2}
+.tl-item p{font-size:.88rem;color:var(--mid);line-height:1.9}
+.how-img img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 15%;position:sticky;top:calc(var(--nh) + 2rem)}
+
+/* ── QUOTE ── */
+#quote{position:relative;min-height:55vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.q-bg{position:absolute;inset:0;background-size:cover;background-position:50% 18%;filter:grayscale(55%) brightness(.18)}
+.q-inner{position:relative;z-index:1;text-align:center;padding:clamp(3rem,8vw,7rem) clamp(1.5rem,12vw,14rem);max-width:920px}
+.q-inner blockquote{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(1.9rem,4.2vw,3.5rem);color:#fff;line-height:1.28;margin-bottom:2.6rem;opacity:.88}
+.q-inner blockquote em{color:rgba(138,158,138,.95);font-style:italic}
+
+/* ── CONTACT ── */
+#contact{background:var(--off)}
+.contact-wrap{display:grid;grid-template-columns:5fr 7fr;gap:clamp(3rem,7vw,8rem);align-items:start}
+.contact-intro .display{font-size:clamp(2.2rem,3.5vw,3.2rem)}
+.contact-intro .prose{margin-top:1.2rem}
+.contact-details{margin-top:2.4rem;display:flex;flex-direction:column;gap:.55rem}
+.cd-item{display:flex;align-items:center;gap:.75rem;font-size:.85rem;color:var(--mid);transition:color .18s}
+.cd-item:hover{color:var(--ink)}
+.cd-item svg{opacity:.4;flex-shrink:0}
+.cd-divider{height:1px;background:var(--line);margin:1.6rem 0}
+
+/* ── FORM ── */
+.form-wrap{background:#fff;padding:clamp(2rem,4vw,3rem)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.2rem}
+.form-field{display:flex;flex-direction:column;gap:.45rem;margin-bottom:1.2rem}
+.form-field:last-of-type{margin-bottom:0}
+.form-field label{font-family:'Inter',sans-serif;font-size:.55rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.form-field input,
+.form-field select,
+.form-field textarea{font-family:'Inter',sans-serif;font-size:.9rem;font-weight:300;color:var(--ink);background:#fff;border:1px solid var(--line);padding:.8rem 1rem;outline:none;width:100%;-webkit-appearance:none;border-radius:0;transition:border-color .18s}
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus{border-color:var(--sage)}
+.form-field input.er,
+.form-field select.er,
+.form-field textarea.er{border-color:#C0604A}
+.form-field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23A09C97' stroke-width='1.2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.4rem;cursor:pointer}
+.form-field input::placeholder,
+.form-field textarea::placeholder{color:#C8C4BF}
+.form-field textarea{resize:vertical;min-height:130px;line-height:1.7}
+.form-err{font-size:.56rem;color:#C0604A;letter-spacing:.06em;display:none;margin-top:.15rem}
+.form-err.show{display:block}
+.form-foot{display:flex;align-items:center;gap:1.6rem;margin-top:1.6rem;flex-wrap:wrap}
+.form-note{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.82rem;color:var(--muted)}
+.form-submit{font-family:'Inter',sans-serif;font-size:.58rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;background:var(--ink);color:#fff;border:none;padding:.9rem 2.2rem;cursor:pointer;transition:background .18s;border-radius:0}
+.form-submit:hover{background:#333}
+.form-submit.ld{opacity:.5;pointer-events:none}
+/* success */
+.form-ok{display:none;flex-direction:column;align-items:flex-start;padding:2.5rem 0;gap:.8rem}
+.form-ok-tick{width:52px;height:52px;border:1px solid rgba(92,107,92,.4);display:flex;align-items:center;justify-content:center}
+.form-ok h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--ink)}
+.form-ok p{font-size:.9rem;color:var(--mid);line-height:1.8}
+
+/* ── FOOTER ── */
+footer{background:var(--dark);padding:clamp(3.5rem,6vw,6rem) clamp(1.5rem,5.5vw,5.5rem) clamp(1.5rem,3vw,2.5rem)}
+.f-top{display:grid;grid-template-columns:2fr 1fr 1fr 1.4fr;gap:clamp(2rem,4vw,5rem);padding-bottom:clamp(2.5rem,4vw,4rem);border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:clamp(1.2rem,2vw,2rem)}
+.f-col-brand .f-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:#fff;display:block;margin-bottom:.4rem;line-height:1.1}
+.f-col-brand .f-sub{font-size:.46rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.22);display:block;margin-bottom:1.4rem}
+.f-col-brand p{font-size:.85rem;color:rgba(255,255,255,.28);line-height:1.85;max-width:260px}
+.f-col-title{font-size:.5rem;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.2);display:block;margin-bottom:1.1rem}
+.f-col ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.f-col ul a{font-size:.78rem;color:rgba(255,255,255,.3);transition:color .18s;display:block}
+.f-col ul a:hover{color:rgba(255,255,255,.75)}
+.f-col-contact ul{gap:.65rem}
+.f-col-contact a{display:flex;align-items:center;gap:.55rem;font-size:.78rem;color:rgba(255,255,255,.3);transition:color .18s}
+.f-col-contact a:hover{color:rgba(255,255,255,.75)}
+.f-col-contact svg{opacity:.45;flex-shrink:0}
+.f-cta-block{margin-top:1.6rem}
+.f-cta-block a{display:inline-block;font-family:'Inter',sans-serif;font-size:.56rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;padding:.75rem 1.5rem;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.5);transition:all .18s}
+.f-cta-block a:hover{border-color:rgba(255,255,255,.5);color:#fff}
+.f-base{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+.f-base span{font-size:.52rem;color:rgba(255,255,255,.14);letter-spacing:.07em}
+.f-base a{font-size:.52rem;color:rgba(255,255,255,.14);letter-spacing:.07em;transition:color .18s}
+.f-base a:hover{color:rgba(255,255,255,.4)}
+
+/* ── REVEAL ── */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .65s,transform .65s}
+.rv.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .nl,.ncta{display:none}
+  #hbg{display:flex}
+  .h-hed{font-size:clamp(3.2rem,10vw,6rem)}
+  .h-i2{padding-left:clamp(1rem,4vw,3rem)}
+  .h-i3{padding-left:clamp(2rem,8vw,6rem)}
+  .h-row{flex-direction:column;align-items:flex-start;gap:1.6rem}
+  .h-right{align-items:flex-start}
+  .h-strap{text-align:left}
+  .h-btns{justify-content:flex-start}
+  .h-meta{display:none}
+  .mfst,.about,.how,.contact-wrap{grid-template-columns:1fr;gap:2.8rem}
+  .mfst-photos{padding-bottom:clamp(3rem,10vw,5rem)}
+  .mfst-photos .ph-inset{width:45%}
+  .a-photos{order:-1}
+  .how-img{display:none}
+  .srv-head{grid-template-columns:1fr;gap:2rem}
+  .srv-grid{grid-template-columns:1fr}
+  .srv-cell:nth-child(odd){border-right:none}
+  .srv-foot{flex-direction:column;gap:1.4rem}
+  .f-top{grid-template-columns:1fr 1fr;gap:2rem 3rem}
+  .f-col-brand{grid-column:1/-1}
+}
+@media(max-width:600px){
+  .h-hed{font-size:clamp(2.8rem,13vw,4.2rem);line-height:.92}
+  .h-i2{padding-left:.5rem}
+  .h-i3{padding-left:1rem}
+  .form-row{grid-template-columns:1fr}
+  .a-photos img:not(:first-child){height:42vw}
+  .f-top{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  .ticker-t{animation:none}
+  .h-bg img{transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nb">
+    <span class="nb-name">Sing Like No One Else</span>
+    <span class="nb-tag">Olivia Hyde · Artist Mentorship</span>
+  </a>
+  <ul class="nl">
+    <li><a href="#manifesto">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="ncta">Free Consultation</a>
+  <button id="hbg" aria-label="Open menu" aria-expanded="false" aria-controls="mm"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mm" role="dialog" aria-modal="true" aria-label="Navigation">
+  <div id="mmb" aria-hidden="true"></div>
+  <div id="mmp">
+    <div id="mmh">
+      <span id="mmhb">Sing Like No One Else</span>
+      <button id="mmc" aria-label="Close">&#215;</button>
+    </div>
+    <nav id="mml">
+      <a href="#manifesto">About</a>
+      <a href="#services">Services</a>
+      <a href="#how">How It Works</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div id="mmf">
+      <a href="#contact" id="mmct">Book Free Consultation</a>
+      <div class="mm-c">
+        <a href="mailto:olivia@singlikenooneelse.co.uk">olivia@singlikenooneelse.co.uk</a>
+        <a href="tel:+447960887546">07960 887546</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="h-bg">
+    <img src="https://raw.githubusercontent.com/9s4pr6gvvk-bot/singlikenooneelse/refs/heads/main/62331531_2294124670855268_4219635674162135040_n.jpg" alt="Olivia Hyde">
+  </div>
+  <div class="h-meta" aria-hidden="true">
+    <span>Olivia Hyde · Artist Mentorship</span>
+    <span>Based in the UK</span>
+  </div>
+  <div class="h-inner">
+    <div class="h-row">
+      <h1 class="h-hed">
+        <span class="rv d1" style="display:block">For Artists</span>
+        <span class="h-i2 rv d2">With <em>Something</em></span>
+        <span class="h-i3 rv d3"><em>Real</em> To Say</span>
+      </h1>
+      <div class="h-right rv d2">
+        <p class="h-strap">Technical development, creative direction &amp; honest mentorship for original artists.</p>
+        <div class="h-btns">
+          <a href="#contact" class="btn btn-white">Book Free Consultation</a>
+          <a href="#manifesto" class="btn btn-outline-w">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-t">
+    <span>Singing</span><span class="sep"> &nbsp;—&nbsp; </span><span>Songwriting</span><span class="sep"> &nbsp;—&nbsp; </span><span>Performance</span><span class="sep"> &nbsp;—&nbsp; </span><span>Arranging</span><span class="sep"> &nbsp;—&nbsp; </span><span>Production</span><span class="sep"> &nbsp;—&nbsp; </span><span>Branding</span><span class="sep"> &nbsp;—&nbsp; </span><span>Music Video Direction</span><span class="sep"> &nbsp;—&nbsp; </span><span>Creative Direction</span><span class="sep"> &nbsp;—&nbsp; </span><span>Confidence &amp; Resilience</span><span class="sep"> &nbsp;—&nbsp; </span>
+    <span>Singing</span><span class="sep"> &nbsp;—&nbsp; </span><span>Songwriting</span><span class="sep"> &nbsp;—&nbsp; </span><span>Performance</span><span class="sep"> &nbsp;—&nbsp; </span><span>Arranging</span><span class="sep"> &nbsp;—&nbsp; </span><span>Production</span><span class="sep"> &nbsp;—&nbsp; </span><span>Branding</span><span class="sep"> &nbsp;—&nbsp; </span><span>Music Video Direction</span><span class="sep"> &nbsp;—&nbsp; </span><span>Creative Direction</span><span class="sep"> &nbsp;—&nbsp; </span><span>Confidence &amp; Resilience</span><span class="sep"> &nbsp;—&nbsp; </span>
+  </div>
+</div>
+
+<!-- MANIFESTO -->
+<section id="manifesto" class="pad">
+  <div class="mfst">
+    <div class="mfst-photos rv">
+      <img class="ph-main" src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/35694868_255164948566121_6544878797248790528_n.jpg?raw=true" alt="Olivia Hyde">
+      <img class="ph-inset" src="https://raw.githubusercontent.com/9s4pr6gvvk-bot/singlikenooneelse/refs/heads/main/IMG_20210109_154824.jpg" alt="Olivia Hyde">
+    </div>
+    <div class="rv d1">
+      <span class="label">The Reality</span>
+      <h2 class="display" style="font-size:clamp(2.2rem,3.8vw,3.5rem);margin:.7rem 0 0">Making original<br>music can be <em>brutal.</em></h2>
+      <span class="dash"></span>
+      <div class="prose">
+        <p>It asks a lot of you. Not just creatively, but emotionally. You are expected to make work that is personal, vulnerable and true, then place it in front of the world and somehow stay sane while people ignore it, misunderstand it, admire it or tear it apart.</p>
+        <p>Add rejection, inconsistency, self-doubt, online bullying, sexism, racism, homophobia and the general strangeness of trying to build something meaningful in public — and it is no wonder so many talented people <strong>lose confidence or lose their way.</strong></p>
+        <div class="pull-quote">I know what it is to build something from the ground up, to wear every hat, and to keep going when things are difficult.</div>
+        <p>I'm a singer-songwriter with over ten years of experience fronting a metal band, alongside hands-on work in songwriting, performance, production, branding, marketing and visual direction. I also make all my own music videos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="pad">
+  <div class="about">
+    <div class="rv">
+      <span class="label">The Mentorship</span>
+      <h2 class="display" style="font-size:clamp(2.2rem,3.8vw,3.5rem);margin:.7rem 0 0">More than a<br><em>better singer.</em></h2>
+      <span class="dash"></span>
+      <div class="prose">
+        <p>My mentorship programmes are not just about becoming a better singer, songwriter or performer. They are about becoming <strong>stronger, clearer and more resilient</strong> as an artist and as a person.</p>
+        <p>Becoming the best artist you can be is not just about technical skills — it is about understanding yourself and knowing how to cope when things get hard.</p>
+        <p>No two artists are the same, so no two packages are the same either. We build your programme together around your strengths, your goals and the areas where you need the most support.</p>
+      </div>
+      <div class="tags">
+        <span class="tag">10+ Years Experience</span>
+        <span class="tag">Original Artist</span>
+        <span class="tag">Metal · Indie · Folk</span>
+        <span class="tag">Music Video Director</span>
+        <span class="tag">Songwriter</span>
+        <span class="tag">Performer</span>
+      </div>
+    </div>
+    <div class="a-photos rv d1">
+      <img src="https://raw.githubusercontent.com/9s4pr6gvvk-bot/singlikenooneelse/refs/heads/main/62331531_2294124670855268_4219635674162135040_n.jpg" alt="Olivia on stage">
+      <img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/62353545_1172949436219414_8206268943019540480_n.jpg?raw=true" alt="Olivia performing">
+      <img src="https://raw.githubusercontent.com/9s4pr6gvvk-bot/singlikenooneelse/refs/heads/main/IMG_20210109_154824.jpg" alt="Olivia Hyde">
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<div id="services">
+  <div class="srv-head">
+    <div class="srv-head-l rv">
+      <span class="label">What We Cover</span>
+      <h2 class="display" style="font-size:clamp(2.2rem,3.8vw,3.5rem);margin:.7rem 0 0">Built Around <em>You</em></h2>
+      <span class="dash"></span>
+    </div>
+    <div class="srv-head-r rv d1">
+      <p>Sometimes what an artist needs is help with their technical skills. Sometimes it is strategy. Sometimes emotional support. Often all three. Your programme can include any combination of the areas below.</p>
+      <p class="note">No two programmes are identical. We begin with a free conversation and build from there.</p>
+    </div>
+  </div>
+  <div class="srv-grid">
+    <div class="srv-cell rv">
+      <span class="srv-num">01 — Technical</span>
+      <h3>Voice &amp; Performance</h3>
+      <p>Singing technique, performance craft, stage presence, and the physical and emotional work of performing original material to real audiences.</p>
+      <a href="#contact" class="srv-link">Get in touch</a>
+    </div>
+    <div class="srv-cell rv d1">
+      <span class="srv-num">02 — Creative</span>
+      <h3>Songwriting &amp; Arranging</h3>
+      <p>Developing your voice as a songwriter, structural approaches, arrangement and production — from first idea to release-ready recording.</p>
+      <a href="#contact" class="srv-link">Get in touch</a>
+    </div>
+    <div class="srv-cell rv">
+      <span class="srv-num">03 — Visual</span>
+      <h3>Music Video Direction</h3>
+      <p>Concept, production and visual direction. I make all my own music videos — I can help you bring yours to life on any budget.</p>
+      <a href="#contact" class="srv-link">Get in touch</a>
+    </div>
+    <div class="srv-cell rv d1">
+      <span class="srv-num">04 — Strategic</span>
+      <h3>Branding &amp; Marketing</h3>
+      <p>Branding and social media strategies that feel authentic to who you are — not generic music industry templates that could belong to anyone.</p>
+      <a href="#contact" class="srv-link">Get in touch</a>
+    </div>
+    <div class="srv-cell rv">
+      <span class="srv-num">05 — Emotional</span>
+      <h3>Confidence &amp; Resilience</h3>
+      <p>Mental health support specific to original artists. Dealing with hero worship, trolls and indifference — often all at the same time.</p>
+      <a href="#contact" class="srv-link">Get in touch</a>
+    </div>
+    <div class="srv-cell rv d1">
+      <span class="srv-num">06 — Identity</span>
+      <h3>Creative Direction</h3>
+      <p>Finding your artistic identity and developing a coherent visual and musical language that is unmistakably, consistently yours.</p>
+      <a href="#contact" class="srv-link">Get in touch</a>
+    </div>
+  </div>
+  <div class="srv-foot">
+    <p class="srv-foot-q">"Anyone guaranteeing to make you a star should be given a wide berth. I offer honest guidance, practical tools and real-world experience."<small>— Olivia Hyde</small></p>
+    <a href="#contact" class="btn btn-outline-w">Book a Consultation</a>
+  </div>
+</div>
+
+<!-- HOW -->
+<section id="how" class="pad">
+  <div class="how">
+    <div>
+      <span class="label rv">The Process</span>
+      <h2 class="display rv" style="font-size:clamp(2.2rem,3.8vw,3.5rem);margin:.7rem 0 0">How We <em>Work</em></h2>
+      <span class="dash rv"></span>
+      <div class="tl">
+        <div class="tl-item rv">
+          <div class="tl-dot"></div>
+          <span class="tl-step">Step One</span>
+          <h3>Free Consultation</h3>
+          <p>A free conversation — no pressure, no obligation. I get a clear sense of where you are, where you want to go and what kind of support would genuinely help.</p>
+        </div>
+        <div class="tl-item rv">
+          <div class="tl-dot"></div>
+          <span class="tl-step">Step Two</span>
+          <h3>Build Your Programme</h3>
+          <p>We build something around you. Your strengths, weaknesses and goals. One focused area, or a mixture — whatever you genuinely need most.</p>
+        </div>
+        <div class="tl-item rv">
+          <div class="tl-dot"></div>
+          <span class="tl-step">Step Three</span>
+          <h3>Ongoing Support</h3>
+          <p>Regular sessions with honest feedback. Practical tools from someone who has been in the trenches and knows what it costs to keep going.</p>
+        </div>
+        <div class="tl-item rv">
+          <div class="tl-dot"></div>
+          <span class="tl-step">The Goal</span>
+          <h3>Create Something Real</h3>
+          <p>Not a tick-box outcome — to help you become more of who you already are as an artist. Stronger, clearer and more connected to the work.</p>
+        </div>
+      </div>
+    </div>
+    <div class="how-img rv d1">
+      <img src="https://github.com/9s4pr6gvvk-bot/singlikenooneelse/blob/main/62353545_1172949436219414_8206268943019540480_n.jpg?raw=true" alt="Olivia Hyde">
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div id="quote">
+  <div class="q-bg" style="background-image:url('https://raw.githubusercontent.com/9s4pr6gvvk-bot/singlikenooneelse/refs/heads/main/62331531_2294124670855268_4219635674162135040_n.jpg');"></div>
+  <div class="q-inner rv">
+    <blockquote>"Become stronger, clearer and more resilient<br>as an artist — and as a <em>person.</em>"</blockquote>
+    <a href="#contact" class="btn btn-white">Book Your Free Consultation</a>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact" class="pad">
+  <div class="contact-wrap">
+    <div class="rv">
+      <span class="label">Free Consultation</span>
+      <h2 class="display" style="font-size:clamp(2rem,3.5vw,3.2rem);margin:.7rem 0 0">Let's build something<br><em>that fits you.</em></h2>
+      <span class="dash"></span>
+      <div class="prose">
+        <p>Consultations are free. Get in touch and we can talk about your goals, where you feel stuck, and what kind of support would help you move forward with more clarity and confidence.</p>
+        <p>I'll reply personally within 48 hours.</p>
+      </div>
+      <div class="cd-divider"></div>
+      <div class="contact-details">
+        <a href="mailto:olivia@singlikenooneelse.co.uk" class="cd-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="4" width="20" height="16" rx="1.5"/><path d="m2 7 10 7 10-7"/></svg>
+          olivia@singlikenooneelse.co.uk
+        </a>
+        <a href="tel:+447960887546" class="cd-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16v.92z"/></svg>
+          07960 887546
+        </a>
+        <a href="https://wa.me/447960887546" class="cd-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="opacity:.35"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <div class="rv d1">
+      <div class="form-wrap" id="the-form">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="f-name">Full name</label>
+            <input type="text" id="f-name" placeholder="e.g. Alex Smith" autocomplete="name">
+            <span class="form-err" id="e-name">Please enter your name.</span>
+          </div>
+          <div class="form-field">
+            <label for="f-email">Email address</label>
+            <input type="email" id="f-email" placeholder="you@example.com" autocomplete="email">
+            <span class="form-err" id="e-email">Please enter a valid email address.</span>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="f-topic">Area of interest</label>
+          <select id="f-topic">
+            <option value="" disabled selected>Select a topic…</option>
+            <option>Voice &amp; Performance</option>
+            <option>Songwriting &amp; Arranging</option>
+            <option>Music Video Direction</option>
+            <option>Branding &amp; Marketing</option>
+            <option>Confidence &amp; Resilience</option>
+            <option>Creative Direction</option>
+            <option>General enquiry</option>
+          </select>
+          <span class="form-err" id="e-topic">Please select a topic.</span>
+        </div>
+        <div class="form-field">
+          <label for="f-msg">Tell me where you are right now</label>
+          <textarea id="f-msg" placeholder="What are you working on? Where do you feel stuck? What do you want to change?"></textarea>
+          <span class="form-err" id="e-msg">Please add a message.</span>
+        </div>
+        <div class="form-foot">
+          <button class="form-submit" id="f-submit">Send Message</button>
+        </div>
+      </div>
+      <div class="form-ok" id="form-ok">
+        <div class="form-ok-tick">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="1.3"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <h3 class="form-ok-h">Message sent.</h3>
+        <p>Thank you for reaching out — Olivia will be in touch soon.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-top">
+    <div class="f-col f-col-brand">
+      <span class="f-name">Sing Like No One Else</span>
+      <span class="f-sub">Olivia Hyde · Artist Mentorship</span>
+      <p>Technical development, creative direction and honest mentorship for original artists with something real to say.</p>
+      <div class="f-cta-block"><a href="#contact">Book a Free Consultation</a></div>
+    </div>
+    <div class="f-col">
+      <span class="f-col-title">Navigate</span>
+      <ul>
+        <li><a href="#manifesto">About</a></li>
+        <li><a href="#about">The Mentorship</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <span class="f-col-title">Services</span>
+      <ul>
+        <li><a href="#services">Voice &amp; Performance</a></li>
+        <li><a href="#services">Songwriting &amp; Arranging</a></li>
+        <li><a href="#services">Music Video Direction</a></li>
+        <li><a href="#services">Branding &amp; Marketing</a></li>
+        <li><a href="#services">Confidence &amp; Resilience</a></li>
+        <li><a href="#services">Creative Direction</a></li>
+      </ul>
+    </div>
+    <div class="f-col f-col-contact">
+      <span class="f-col-title">Get In Touch</span>
+      <ul>
+        <li>
+          <a href="mailto:olivia@singlikenooneelse.co.uk">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="4" width="20" height="16" rx="1.5"/><path d="m2 7 10 7 10-7"/></svg>
+            olivia@singlikenooneelse.co.uk
+          </a>
+        </li>
+        <li>
+          <a href="tel:+447960887546">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16v.92z"/></svg>
+            07960 887546
+          </a>
+        </li>
+        <li>
+          <a href="https://wa.me/447960887546">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="opacity:.45"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+        </li>
+        <li><a href="https://singlikenooneelse.co.uk" style="padding-left:1.7rem">singlikenooneelse.co.uk</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="f-base">
+    <span>© 2026 Olivia Hyde · Sing Like No One Else. All rights reserved.</span>
+    <a href="mailto:olivia@singlikenooneelse.co.uk">olivia@singlikenooneelse.co.uk</a>
+  </div>
+</footer>
+
+<script>
+// NAV
+var nav=document.getElementById('nav');
+window.addEventListener('scroll',function(){nav.classList.toggle('sc',window.scrollY>8);},{passive:true});
+
+// MOBILE MENU
+var hbg=document.getElementById('hbg'),mm=document.getElementById('mm'),mmb=document.getElementById('mmb'),mmc=document.getElementById('mmc');
+function openMM(){mm.classList.add('open');hbg.classList.add('open');hbg.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';}
+function closeMM(){mm.classList.remove('open');hbg.classList.remove('open');hbg.setAttribute('aria-expanded','false');document.body.style.overflow='';}
+hbg.addEventListener('click',openMM);
+mmb.addEventListener('click',closeMM);
+mmc.addEventListener('click',closeMM);
+document.querySelectorAll('#mml a,#mmct').forEach(function(a){a.addEventListener('click',closeMM);});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMM();});
+
+// REVEAL
+var obs=new IntersectionObserver(function(es){
+  es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target);}});
+},{threshold:0.08,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('.rv').forEach(function(el){obs.observe(el);});
+requestAnimationFrame(function(){
+  document.querySelectorAll('#hero .rv').forEach(function(el){el.classList.add('on');});
+  setTimeout(function(){document.getElementById('hero').classList.add('ld');},60);
+});
+
+// CONTACT FORM
+document.getElementById('f-submit').addEventListener('click',function(){
+  var name=document.getElementById('f-name');
+  var email=document.getElementById('f-email');
+  var topic=document.getElementById('f-topic');
+  var msg=document.getElementById('f-msg');
+  var ok=true;
+
+  function check(el,errId,test){
+    var bad=test(el.value);
+    el.classList.toggle('er',bad);
+    document.getElementById(errId).classList.toggle('show',bad);
+    if(bad)ok=false;
+  }
+  check(name,'e-name',function(v){return!v.trim();});
+  check(email,'e-email',function(v){return!v.trim()||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);});
+  check(topic,'e-topic',function(v){return!v;});
+  check(msg,'e-msg',function(v){return!v.trim();});
+
+  if(!ok)return;
+  var btn=this;
+  btn.classList.add('ld');btn.textContent='Sending…';
+  setTimeout(function(){
+    document.getElementById('the-form').style.display='none';
+    document.getElementById('form-ok').style.display='flex';
+  },1400);
+});
+</script>
+</body>
+</html>
