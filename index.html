@@ -263,6 +263,8 @@ footer{background:var(--dark);padding:clamp(3.5rem,6vw,6rem) clamp(1.5rem,5.5vw,
   .srv-foot{flex-direction:column;gap:1.4rem}
   .f-top{grid-template-columns:1fr 1fr;gap:2rem 3rem}
   .f-col-brand{grid-column:1/-1}
+  .q-bottom{flex-direction:column;align-items:flex-start;gap:1.4rem}
+  .pad{padding:clamp(3.5rem,8vw,6rem) clamp(1.2rem,5vw,2.5rem)}
 }
 @media(max-width:600px){
   .h-hed{font-size:clamp(2.8rem,13vw,4.2rem);line-height:.92}
@@ -271,6 +273,15 @@ footer{background:var(--dark);padding:clamp(3.5rem,6vw,6rem) clamp(1.5rem,5.5vw,
   .form-row{grid-template-columns:1fr}
   .a-photos img:not(:first-child){height:42vw}
   .f-top{grid-template-columns:1fr}
+  .f-col-brand{grid-column:auto}
+  .srv-grid{grid-template-columns:1fr}
+  .mfst-photos .ph-inset{width:40%;bottom:.8rem;right:.8rem}
+  .pull-quote{padding:.8rem 0 .8rem .9rem}
+  .tl{padding-left:1.4rem}
+  .pad{padding:clamp(3rem,8vw,5rem) clamp(1.2rem,5vw,1.8rem)}
+  #quote .q-inner{padding:3rem 1.4rem}
+  .ticker-t span{padding:0 1.2rem}
+  .ticker-t .sep{padding:0}
 }
 @media(prefers-reduced-motion:reduce){
   .rv{opacity:1;transform:none;transition:none}
