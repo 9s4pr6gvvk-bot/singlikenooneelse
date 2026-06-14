@@ -62,35 +62,22 @@ nav.sc .nl a:hover{color:var(--ink)}
 .ncta{font-size:.55rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:#fff;background:var(--sage);padding:.6rem 1.4rem;border:none;cursor:pointer;transition:background .18s}
 .ncta:hover{background:#4A5A4A}
 
-/* hamburger */
-#hbg{display:none;flex-direction:column;gap:5.5px;background:none;border:none;cursor:pointer;width:44px;height:44px;padding:11px;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
-#hbg span{display:block;width:22px;height:1px;background:#fff;transition:background .25s,transform .25s,opacity .25s;transform-origin:center}
+/* ── HAMBURGER + DROPDOWN ── */
+#hbg{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;width:44px;height:44px;padding:11px;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;flex-shrink:0}
+#hbg span{display:block;width:22px;height:1.5px;background:#fff;transition:background .25s,transform .25s,opacity .25s;transform-origin:center}
 nav.sc #hbg span{background:var(--ink)}
 #hbg.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
-#hbg.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+#hbg.open span:nth-child(2){opacity:0}
 #hbg.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+#nav-drop{display:none;position:fixed;top:var(--nh);left:0;right:0;z-index:499;background:rgba(255,255,255,.98);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);box-shadow:0 8px 32px rgba(0,0,0,.1)}
+#nav-drop.open{display:block}
+#nav-drop ul{list-style:none;padding:.5rem 0}
+#nav-drop ul li a,#nav-drop ul li span{display:block;padding:.9rem clamp(1.5rem,5.5vw,5.5rem);font-size:.6rem;font-weight:400;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);transition:color .18s,background .18s}
+#nav-drop ul li a:hover{color:var(--ink);background:var(--off)}
+#nav-drop .drop-cta{display:block;margin:1rem clamp(1.5rem,5.5vw,5.5rem) 1.2rem;font-size:.58rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;text-align:center;color:#fff;background:var(--sage);padding:.9rem;transition:background .18s}
+#nav-drop .drop-cta:hover{background:#4A5A4A}
 
-/* mobile drawer */
-#mm{position:fixed;inset:0;z-index:600;display:flex;visibility:hidden;pointer-events:none}
-#mm.open{visibility:visible;pointer-events:all}
-#mmb{flex:1;background:rgba(0,0,0,0);cursor:pointer;transition:background .3s}
-#mm.open #mmb{background:rgba(0,0,0,.45)}
-#mmp{width:290px;max-width:86vw;background:#fff;display:flex;flex-direction:column;flex-shrink:0;transform:translateX(100%);transition:transform .32s cubic-bezier(.22,1,.36,1)}
-#mm.open #mmp{transform:translateX(0)}
-#mmh{height:var(--nh);display:flex;align-items:center;justify-content:space-between;padding:0 1.6rem;border-bottom:1px solid var(--line)}
-#mmhb{font-family:'Cormorant Garamond',serif;font-size:.88rem;color:var(--muted);letter-spacing:.02em}
-#mmc{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.6rem;line-height:1;width:44px;height:44px;display:flex;align-items:center;justify-content:center;transition:color .18s}
-#mmc:hover{color:var(--ink)}
-#mml{flex:1;display:flex;flex-direction:column;justify-content:center;padding:1rem 2rem}
-#mml a{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:rgba(28,28,28,.4);display:block;padding:.75rem 0;border-bottom:1px solid var(--line);transition:color .18s,padding-left .18s}
-#mml a:first-child{border-top:1px solid var(--line)}
-#mml a:hover{color:var(--ink);padding-left:.4rem}
-#mmf{padding:1.4rem 2rem 2.6rem;border-top:1px solid var(--line)}
-#mmct{display:block;font-size:.56rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;text-align:center;color:#fff;background:var(--sage);padding:.9rem;margin-bottom:1rem;transition:background .18s}
-#mmct:hover{background:#4A5A4A}
-.mm-c{display:flex;flex-direction:column;gap:.4rem;text-align:center}
-.mm-c a{font-size:.6rem;letter-spacing:.04em;color:var(--muted);transition:color .18s}
-.mm-c a:hover{color:var(--ink)}
+
 
 /* ── HERO ── */
 #hero{position:relative;height:100svh;overflow:hidden;display:flex;align-items:flex-end}
@@ -180,19 +167,8 @@ nav.sc #hbg span{background:var(--ink)}
 .how-img img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 15%;position:sticky;top:calc(var(--nh) + 2rem)}
 
 /* ── QUOTE ── */
-#quote{position:relative;min-height:52vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.q-bg{position:absolute;inset:0;background-size:cover;background-position:50% 22%;filter:grayscale(60%) brightness(.15)}
-.q-inner{position:relative;z-index:1;width:100%;max-width:860px;padding:clamp(4rem,8vw,7rem) clamp(2rem,6vw,5rem)}
-.q-eyebrow{font-size:.5rem;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.3);display:block;margin-bottom:2.4rem}
-.q-text{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(2.2rem,4.5vw,4.2rem);line-height:1.2;color:#fff;margin-bottom:2.8rem;letter-spacing:-.01em}
-.q-text em{font-style:italic;color:rgba(138,158,138,.9)}
-.q-bottom{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.1);padding-top:1.8rem}
-.q-attr{display:flex;align-items:center;gap:1.2rem}
-.q-attr-line{width:2rem;height:1px;background:rgba(255,255,255,.25);flex-shrink:0}
-.q-attr-name{font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:400}
-@media(max-width:600px){
-  .q-bottom{flex-direction:column;align-items:flex-start;gap:1.4rem}
-}
+#quote{position:relative;min-height:55vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.q-bg{position:absolute;inset:0;background-size:cover;background-position:50% 18%;filter:grayscale(55%) brightness(.18)}
 
 /* ── CONTACT ── */
 #contact{background:var(--off)}
@@ -301,6 +277,20 @@ footer{background:var(--dark);padding:clamp(3.5rem,6vw,6rem) clamp(1.5rem,5.5vw,
   .ticker-t{animation:none}
   .h-bg img{transition:none}
 }
+
+/* ── QUOTE UPGRADE ── */
+.q-inner{position:relative;z-index:1;width:100%;max-width:860px;padding:clamp(4rem,8vw,7rem) clamp(2rem,6vw,5rem)}
+.q-eyebrow{font-size:.5rem;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.3);display:block;margin-bottom:2.4rem}
+.q-text{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(2.2rem,4.5vw,4.2rem);line-height:1.2;color:#fff;margin-bottom:2.8rem;letter-spacing:-.01em}
+.q-text em{font-style:italic;color:rgba(138,158,138,.9)}
+.q-bottom{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.1);padding-top:1.8rem}
+.q-attr{display:flex;align-items:center;gap:1.2rem}
+.q-attr-line{width:2rem;height:1px;background:rgba(255,255,255,.25);flex-shrink:0}
+.q-attr-name{font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:400}
+.q-attr{display:flex;align-items:center;gap:1.2rem}
+.q-attr-line{width:2rem;height:1px;background:rgba(255,255,255,.25);flex-shrink:0}
+.q-attr-name{font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:400}
+@media(max-width:600px){.q-bottom{flex-direction:column;align-items:flex-start;gap:1.4rem}}
 </style>
 </head>
 <body>
@@ -321,28 +311,15 @@ footer{background:var(--dark);padding:clamp(3.5rem,6vw,6rem) clamp(1.5rem,5.5vw,
   <button id="hbg" aria-label="Open menu" aria-expanded="false" aria-controls="mm"><span></span><span></span><span></span></button>
 </nav>
 
-<!-- MOBILE MENU -->
-<div id="mm" role="dialog" aria-modal="true" aria-label="Navigation">
-  <div id="mmb" aria-hidden="true"></div>
-  <div id="mmp">
-    <div id="mmh">
-      <span id="mmhb">Sing Like No One Else</span>
-      <button id="mmc" aria-label="Close">&#215;</button>
-    </div>
-    <nav id="mml">
-      <a href="#manifesto">About</a>
-      <a href="#services">Services</a>
-      <a href="#how">How It Works</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <div id="mmf">
-      <a href="#contact" id="mmct">Book Free Consultation</a>
-      <div class="mm-c">
-        <a href="mailto:olivia@singlikenooneelse.co.uk">olivia@singlikenooneelse.co.uk</a>
-        <a href="tel:+447960887546">07960 887546</a>
-      </div>
-    </div>
-  </div>
+<!-- NAV DROPDOWN -->
+<div id="nav-drop">
+  <ul>
+    <li><a href="#manifesto">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="drop-cta">Book a Free Consultation</a>
 </div>
 
 <!-- HERO -->
@@ -394,7 +371,7 @@ footer{background:var(--dark);padding:clamp(3.5rem,6vw,6rem) clamp(1.5rem,5.5vw,
       <div class="prose">
         <p>It asks a lot of you. Not just creatively, but emotionally. You are expected to make work that is personal, vulnerable and true, then place it in front of the world and somehow stay sane while people ignore it, misunderstand it, admire it or tear it apart.</p>
         <p>Add rejection, inconsistency, self-doubt, online bullying, sexism, racism, homophobia and the general strangeness of trying to build something meaningful in public — and it is no wonder so many talented people <strong>lose confidence or lose their way.</strong></p>
-        <div class="pull-quote">I know what it is to build something from the ground up, to wear every hat, and to keep going when things are difficult.</div>
+        <div class="pull-quote">I know what it is to build something from the ground up, to wear every hat, to keep going when things are difficult, and to try to stay connected to what made you want to do this in the first place.</div>
         <p>I'm a singer-songwriter with over ten years of experience fronting a metal band, alongside hands-on work in songwriting, performance, production, branding, marketing and visual direction. I also make all my own music videos.</p>
       </div>
     </div>
@@ -454,13 +431,13 @@ footer{background:var(--dark);padding:clamp(3.5rem,6vw,6rem) clamp(1.5rem,5.5vw,
       <span class="srv-num">02 — Creative</span>
       <h3>Songwriting &amp; Arranging</h3>
       <p>Developing your voice as a songwriter, structural approaches, arrangement and production — from first idea to release-ready recording.</p>
-      <a href="#contact" class="srv-link">Get in touch</a>
+      <a href="songwriting-and-arranging.html" class="srv-link">Learn more</a>
     </div>
     <div class="srv-cell rv">
       <span class="srv-num">03 — Visual</span>
       <h3>Music Video Direction</h3>
       <p>Concept, production and visual direction. I make all my own music videos — I can help you bring yours to life on any budget.</p>
-      <a href="#contact" class="srv-link">Get in touch</a>
+      <a href="music-video-direction.html" class="srv-link">Learn more</a>
     </div>
     <div class="srv-cell rv d1">
       <span class="srv-num">04 — Strategic</span>
@@ -472,13 +449,13 @@ footer{background:var(--dark);padding:clamp(3.5rem,6vw,6rem) clamp(1.5rem,5.5vw,
       <span class="srv-num">05 — Emotional</span>
       <h3>Confidence &amp; Resilience</h3>
       <p>Mental health support specific to original artists. Dealing with hero worship, trolls and indifference — often all at the same time.</p>
-      <a href="#contact" class="srv-link">Get in touch</a>
+      <a href="confidence-and-resilience.html" class="srv-link">Learn more</a>
     </div>
     <div class="srv-cell rv d1">
       <span class="srv-num">06 — Identity</span>
       <h3>Creative Direction</h3>
       <p>Finding your artistic identity and developing a coherent visual and musical language that is unmistakably, consistently yours.</p>
-      <a href="#contact" class="srv-link">Get in touch</a>
+      <a href="creative-direction.html" class="srv-link">Learn more</a>
     </div>
   </div>
   <div class="srv-foot">
@@ -685,15 +662,17 @@ footer{background:var(--dark);padding:clamp(3.5rem,6vw,6rem) clamp(1.5rem,5.5vw,
 var nav=document.getElementById('nav');
 window.addEventListener('scroll',function(){nav.classList.toggle('sc',window.scrollY>8);},{passive:true});
 
-// MOBILE MENU
-var hbg=document.getElementById('hbg'),mm=document.getElementById('mm'),mmb=document.getElementById('mmb'),mmc=document.getElementById('mmc');
-function openMM(){mm.classList.add('open');hbg.classList.add('open');hbg.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';}
-function closeMM(){mm.classList.remove('open');hbg.classList.remove('open');hbg.setAttribute('aria-expanded','false');document.body.style.overflow='';}
-hbg.addEventListener('click',openMM);
-mmb.addEventListener('click',closeMM);
-mmc.addEventListener('click',closeMM);
-document.querySelectorAll('#mml a,#mmct').forEach(function(a){a.addEventListener('click',closeMM);});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMM();});
+// DROPDOWN MENU
+var hbg=document.getElementById('hbg');
+var drop=document.getElementById('nav-drop');
+function toggleDrop(){var isOpen=drop.classList.toggle('open');hbg.classList.toggle('open',isOpen);hbg.setAttribute('aria-expanded',isOpen?'true':'false');}
+function closeDrop(){drop.classList.remove('open');hbg.classList.remove('open');hbg.setAttribute('aria-expanded','false');}
+hbg.addEventListener('click',function(e){e.stopPropagation();toggleDrop();});
+document.addEventListener('click',function(e){if(!drop.contains(e.target)&&e.target!==hbg)closeDrop();});
+document.querySelectorAll('#nav-drop a').forEach(function(a){a.addEventListener('click',closeDrop);});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDrop();});
+
+
 
 // REVEAL
 var obs=new IntersectionObserver(function(es){
